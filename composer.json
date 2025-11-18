@@ -1,0 +1,52 @@
+{
+    "name": "taskcollab/tailwindui-php",
+    "description": "Bibliothèque de composants UI réutilisables pour PHP avec Tailwind CSS - Buttons, Cards, Forms, Alerts, Badges, Tables, Navigation",
+    "keywords": [
+        "tailwindcss",
+        "ui",
+        "components",
+        "php",
+        "buttons",
+        "cards",
+        "forms",
+        "alerts",
+        "badges",
+        "tables",
+        "navigation",
+        "laravel",
+        "blade"
+    ],
+    "homepage": "https://babs95.github.io/my_biblio_tailwindUI_PHP/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Babs95",
+            "homepage": "https://github.com/Babs95"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "TailwindUI\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TailwindUI\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TailwindUI\\Laravel\\TailwindUIServiceProvider"
+            ],
+            "aliases": {
+                "UI": "TailwindUI\\Laravel\\Facades\\UI"
+            }
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

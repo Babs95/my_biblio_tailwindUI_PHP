@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation - TailwindUI PHP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .code-block { max-height: 500px; overflow-y: auto; }
+        .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-purple-600">
+                        <i class="fas fa-cube"></i> TailwindUI PHP
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html#components" class="text-gray-600 hover:text-purple-600">Composants</a>
+                    <a href="installation.html" class="text-purple-600 font-semibold">Installation</a>
+                    <a href="laravel.html" class="text-gray-600 hover:text-purple-600">Laravel</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="gradient-bg py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-bold text-white mb-4">
+                <i class="fab fa-php mr-2"></i> Installation PHP / HTML
+            </h1>
+            <p class="text-purple-100 text-lg">
+                Guide complet pour intégrer TailwindUI PHP dans votre projet
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Prerequisites -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i> Prérequis
+            </h2>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <ul class="space-y-3">
+                    <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-3"></i>
+                        <span><strong>PHP 8.0+</strong> - Support des types et des attributs</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-3"></i>
+                        <span><strong>Tailwind CSS</strong> - Via CDN ou npm</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check text-green-500 mr-3"></i>
+                        <span><strong>Font Awesome 6+</strong> - Pour les icônes</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Method 1: Manual -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-hand-paper text-purple-500 mr-2"></i> Méthode 1 : Installation Manuelle
+            </h2>
+
+            <!-- Step 1 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+                <div class="bg-purple-600 text-white px-6 py-3">
+                    <h3 class="font-bold">Étape 1 : Télécharger les fichiers</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">
+                        Téléchargez le dossier <code class="bg-gray-100 px-2 py-1 rounded">src/UI/</code> depuis le repository GitHub :
+                    </p>
+
+                    <a href="https://github.com/Babs95/my_biblio_tailwindUI_PHP/tree/main/TaskCollab/src/UI" target="_blank" class="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900">
+                        <i class="fab fa-github mr-2"></i> Voir sur GitHub
+                    </a>
+
+                    <p class="text-gray-600 mt-4">
+                        Ou clonez le repository complet :
+                    </p>
+
+                    <div class="relative mt-2">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto"><code>git clone https://github.com/Babs95/my_biblio_tailwindUI_PHP.git
+cd L2_IAGE_PHP_STARTER/TaskCollab/src/UI</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+                <div class="bg-purple-600 text-white px-6 py-3">
+                    <h3 class="font-bold">Étape 2 : Copier dans votre projet</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">
+                        Copiez le dossier <code class="bg-gray-100 px-2 py-1 rounded">UI/</code> dans votre répertoire source :
+                    </p>
+
+                    <div class="bg-gray-100 rounded-lg p-4 font-mono text-sm">
+                        <div class="text-gray-600">votre-projet/</div>
+                        <div class="ml-4 text-gray-600">├── src/</div>
+                        <div class="ml-8 text-purple-600 font-bold">├── UI/</div>
+                        <div class="ml-12 text-gray-500">├── Component.php</div>
+                        <div class="ml-12 text-gray-500">├── Button.php</div>
+                        <div class="ml-12 text-gray-500">├── Card.php</div>
+                        <div class="ml-12 text-gray-500">├── Form.php</div>
+                        <div class="ml-12 text-gray-500">├── Alert.php</div>
+                        <div class="ml-12 text-gray-500">├── Badge.php</div>
+                        <div class="ml-12 text-gray-500">├── Table.php</div>
+                        <div class="ml-12 text-gray-500">└── Navigation.php</div>
+                        <div class="ml-4 text-gray-600">├── public/</div>
+                        <div class="ml-4 text-gray-600">└── vendor/</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+                <div class="bg-purple-600 text-white px-6 py-3">
+                    <h3 class="font-bold">Étape 3 : Configurer l'autoload PSR-4</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">
+                        Ajoutez le namespace dans votre <code class="bg-gray-100 px-2 py-1 rounded">composer.json</code> :
+                    </p>
+
+                    <div class="relative">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="code-block"><code class="language-json">{
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}</code></pre>
+                    </div>
+
+                    <p class="text-gray-600 mt-4">
+                        Puis regénérez l'autoload :
+                    </p>
+
+                    <div class="relative mt-2">
+                        <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto"><code>composer dump-autoload</code></pre>
+                    </div>
+
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-4">
+                        <p class="text-yellow-800 text-sm">
+                            <i class="fas fa-lightbulb mr-2"></i>
+                            <strong>Sans Composer ?</strong> Créez un autoloader manuel ou incluez les fichiers directement avec <code>require_once</code>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-purple-600 text-white px-6 py-3">
+                    <h3 class="font-bold">Étape 4 : Inclure Tailwind CSS et Font Awesome</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">
+                        Dans votre fichier HTML principal ou layout :
+                    </p>
+
+                    <div class="relative">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="code-block"><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Mon Application&lt;/title&gt;
+
+    &lt;!-- Tailwind CSS --&gt;
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+
+    &lt;!-- Font Awesome --&gt;
+    &lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Votre contenu --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Method 2: Composer -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-box text-blue-500 mr-2"></i> Méthode 2 : Via Composer (Recommandé)
+            </h2>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-blue-600 text-white px-6 py-3">
+                    <h3 class="font-bold">Installation en une commande</h3>
+                </div>
+                <div class="p-6">
+                    <div class="relative">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto"><code>composer require taskcollab/tailwindui-php</code></pre>
+                    </div>
+
+                    <p class="text-gray-600 mt-4">
+                        La bibliothèque sera automatiquement disponible via l'autoload Composer.
+                    </p>
+
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
+                        <p class="text-blue-800 text-sm">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            <strong>Note :</strong> Le package Composer sera bientôt disponible sur Packagist.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-code text-green-500 mr-2"></i> Utilisation
+            </h2>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-green-600 text-white px-6 py-3">
+                    <h3 class="font-bold">Exemple complet</h3>
+                </div>
+                <div class="p-6">
+                    <div class="relative">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="code-block"><code class="language-php">&lt;?php
+// index.php ou votre vue
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use TailwindUI\Button;
+use TailwindUI\Card;
+use TailwindUI\Form;
+use TailwindUI\Alert;
+use TailwindUI\Badge;
+use TailwindUI\Table;
+use TailwindUI\Navigation;
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Mon Application&lt;/title&gt;
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+    &lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;
+&lt;/head&gt;
+&lt;body class="bg-gray-50"&gt;
+
+&lt;div class="max-w-4xl mx-auto py-8 px-4"&gt;
+    &lt;h1 class="text-3xl font-bold mb-8"&gt;Dashboard&lt;/h1&gt;
+
+    &lt;!-- Alertes --&gt;
+    &lt;?= Alert::success('Bienvenue dans votre application !') ?&gt;
+
+    &lt;!-- Stats --&gt;
+    &lt;div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"&gt;
+        &lt;?= Card::stat('Projets', '12', 'fas fa-folder', 'blue') ?&gt;
+        &lt;?= Card::stat('Tâches', '48', 'fas fa-tasks', 'green') ?&gt;
+        &lt;?= Card::stat('Utilisateurs', '5', 'fas fa-users', 'purple') ?&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Formulaire --&gt;
+    &lt;?= Card::withHeader('Nouveau Projet', '
+        &lt;form method="POST" action="/projects"&gt;
+            ' . Form::input('title', 'Titre', ['required' => true]) . '
+            ' . Form::textarea('description', 'Description') . '
+            ' . Form::select('priority', 'Priorité', [
+                'low' => 'Basse',
+                'medium' => 'Moyenne',
+                'high' => 'Haute'
+            ]) . '
+            &lt;div class="flex justify-end space-x-4"&gt;
+                ' . Button::secondary('Annuler') . '
+                ' . Button::withIcon('Créer', 'fas fa-save', 'primary', ['type' => 'submit']) . '
+            &lt;/div&gt;
+        &lt;/form&gt;
+    ') ?&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Autoloader sans Composer -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-cogs text-orange-500 mr-2"></i> Autoloader sans Composer
+            </h2>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-orange-600 text-white px-6 py-3">
+                    <h3 class="font-bold">autoload.php personnalisé</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">
+                        Si vous n'utilisez pas Composer, créez un autoloader PSR-4 :
+                    </p>
+
+                    <div class="relative">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="code-block"><code class="language-php">&lt;?php
+// autoload.php
+
+spl_autoload_register(function (string $className): void {
+    // Namespace de base
+    $prefix = 'App\\';
+    $baseDir = __DIR__ . '/src/';
+
+    // Vérifie si la classe utilise notre namespace
+    $len = strlen($prefix);
+    if (strncmp($prefix, $className, $len) !== 0) {
+        return;
+    }
+
+    // Récupère le nom relatif de la classe
+    $relativeClass = substr($className, $len);
+
+    // Construit le chemin du fichier
+    $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
+
+    // Charge le fichier s'il existe
+    if (file_exists($file)) {
+        require $file;
+    }
+});
+
+// Utilisation :
+// require_once __DIR__ . '/autoload.php';
+// use TailwindUI\Button;
+// echo Button::primary('Click');
+?&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Next Steps -->
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-arrow-right text-purple-500 mr-2"></i> Étapes Suivantes
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <a href="index.html#components" class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition">
+                    <h3 class="font-bold text-lg mb-2">
+                        <i class="fas fa-puzzle-piece text-purple-500 mr-2"></i> Explorer les Composants
+                    </h3>
+                    <p class="text-gray-600">Découvrez tous les composants disponibles avec des exemples.</p>
+                </a>
+
+                <a href="laravel.html" class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition">
+                    <h3 class="font-bold text-lg mb-2">
+                        <i class="fab fa-laravel text-red-500 mr-2"></i> Intégration Laravel
+                    </h3>
+                    <p class="text-gray-600">Guide spécifique pour Laravel avec Service Provider et Facades.</p>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-400">
+                &copy; 2024 TailwindUI PHP - IAGE Formation L2
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.parentElement.querySelector('code');
+            const text = codeBlock.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copié !';
+                setTimeout(() => { button.innerHTML = originalText; }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intégration Laravel - TailwindUI PHP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #f43f5e 0%, #dc2626 100%); }
+        .code-block { max-height: 500px; overflow-y: auto; }
+        .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-purple-600">
+                        <i class="fas fa-cube"></i> TailwindUI PHP
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html#components" class="text-gray-600 hover:text-purple-600">Composants</a>
+                    <a href="installation.html" class="text-gray-600 hover:text-purple-600">Installation</a>
+                    <a href="laravel.html" class="text-red-600 font-semibold">Laravel</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="gradient-bg py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-bold text-white mb-4">
+                <i class="fab fa-laravel mr-2"></i> Intégration Laravel
+            </h1>
+            <p class="text-red-100 text-lg">
+                Guide complet pour utiliser TailwindUI PHP avec Laravel
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Installation -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-download text-red-500 mr-2"></i> Installation
+            </h2>
+
+            <!-- Step 1 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+                <div class="bg-red-600 text-white px-6 py-3">
+                    <h3 class="font-bold">Étape 1 : Copier les fichiers</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">
+                        Copiez le dossier <code class="bg-gray-100 px-2 py-1 rounded">UI/</code> dans <code class="bg-gray-100 px-2 py-1 rounded">app/</code> :
+                    </p>
+
+                    <div class="bg-gray-100 rounded-lg p-4 font-mono text-sm">
+                        <div class="text-gray-600">laravel-project/</div>
+                        <div class="ml-4 text-gray-600">├── app/</div>
+                        <div class="ml-8 text-red-600 font-bold">├── UI/</div>
+                        <div class="ml-12 text-gray-500">├── Component.php</div>
+                        <div class="ml-12 text-gray-500">├── Button.php</div>
+                        <div class="ml-12 text-gray-500">├── Card.php</div>
+                        <div class="ml-12 text-gray-500">├── ...</div>
+                        <div class="ml-8 text-gray-600">├── Http/</div>
+                        <div class="ml-8 text-gray-600">├── Models/</div>
+                        <div class="ml-8 text-gray-600">└── Providers/</div>
+                    </div>
+
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-4">
+                        <p class="text-yellow-800 text-sm">
+                            <i class="fas fa-lightbulb mr-2"></i>
+                            <strong>Important :</strong> Modifiez le namespace de <code>TailwindUI</code> dans chaque fichier PHP.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+                <div class="bg-red-600 text-white px-6 py-3">
+                    <h3 class="font-bold">Étape 2 : Mettre à jour les namespaces</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">
+                        Dans chaque fichier du dossier UI, changez le namespace :
+                    </p>
+
+                    <div class="relative">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="code-block"><code class="language-php">&lt;?php
+// Avant
+namespace TailwindUI;
+
+// Aucun changement nécessaire si vous utilisez TailwindUI dans Laravel !
+// Le namespace App\ est déjà configuré par défaut.
+?&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-red-600 text-white px-6 py-3">
+                    <h3 class="font-bold">Étape 3 : Configurer Tailwind CSS</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">
+                        Si vous n'avez pas encore Tailwind CSS dans votre projet Laravel :
+                    </p>
+
+                    <div class="relative mb-4">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto"><code>npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p</code></pre>
+                    </div>
+
+                    <p class="text-gray-600 mb-2">
+                        Ou utilisez le CDN dans votre layout Blade :
+                    </p>
+
+                    <div class="relative">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="code-block"><code class="language-html">&lt;!-- resources/views/layouts/app.blade.php --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;@yield('title', 'Mon Application')&lt;/title&gt;
+
+    &lt;!-- Tailwind CSS CDN --&gt;
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+
+    &lt;!-- Font Awesome --&gt;
+    &lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;
+
+    @stack('styles')
+&lt;/head&gt;
+&lt;body class="bg-gray-50"&gt;
+    @yield('content')
+
+    @stack('scripts')
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage in Blade -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-file-code text-green-500 mr-2"></i> Utilisation dans Blade
+            </h2>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+                <div class="bg-green-600 text-white px-6 py-3">
+                    <h3 class="font-bold">Méthode 1 : Utilisation directe</h3>
+                </div>
+                <div class="p-6">
+                    <div class="relative">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="code-block"><code class="language-php">{{-- resources/views/dashboard.blade.php --}}
+
+@extends('layouts.app')
+
+@section('title', 'Dashboard')
+
+@section('content')
+&lt;div class="max-w-7xl mx-auto py-8 px-4"&gt;
+    &lt;h1 class="text-3xl font-bold mb-8"&gt;Tableau de bord&lt;/h1&gt;
+
+    {{-- Alertes --}}
+    @if(session('success'))
+        {!! \TailwindUI\Alert::success(session('success')) !!}
+    @endif
+
+    @if(session('error'))
+        {!! \TailwindUI\Alert::error(session('error')) !!}
+    @endif
+
+    {{-- Statistiques --}}
+    &lt;div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8"&gt;
+        {!! \TailwindUI\Card::stat('Projets', $projectCount, 'fas fa-folder', 'blue') !!}
+        {!! \TailwindUI\Card::stat('Tâches', $taskCount, 'fas fa-tasks', 'green') !!}
+        {!! \TailwindUI\Card::stat('Terminées', $completedCount, 'fas fa-check-circle', 'purple') !!}
+        {!! \TailwindUI\Card::stat('En retard', $overdueCount, 'fas fa-exclamation-triangle', 'red') !!}
+    &lt;/div&gt;
+
+    {{-- Tableau --}}
+    @php
+        $headers = ['Titre', 'Statut', 'Priorité', 'Actions'];
+        $rows = [];
+        foreach($tasks as $task) {
+            $rows[] = [
+                e($task->title),
+                \TailwindUI\Table::statusCell($task->status),
+                \TailwindUI\Table::priorityCell($task->priority),
+                \TailwindUI\Table::actionsCell([
+                    \TailwindUI\Table::actionButton(route('tasks.edit', $task), 'fas fa-edit', 'Modifier', 'blue'),
+                    \TailwindUI\Table::actionButton(route('tasks.destroy', $task), 'fas fa-trash', 'Supprimer', 'red')
+                ])
+            ];
+        }
+    @endphp
+
+    {!! \TailwindUI\Table::full($headers, $rows) !!}
+&lt;/div&gt;
+@endsection</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-green-600 text-white px-6 py-3">
+                    <h3 class="font-bold">Méthode 2 : Avec imports use</h3>
+                </div>
+                <div class="p-6">
+                    <div class="relative">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="code-block"><code class="language-php">{{-- resources/views/projects/create.blade.php --}}
+
+@php
+    use TailwindUI\Form;
+    use TailwindUI\Button;
+    use TailwindUI\Card;
+@endphp
+
+@extends('layouts.app')
+
+@section('content')
+&lt;div class="max-w-2xl mx-auto py-8"&gt;
+    {!! Card::withHeader(
+        'Nouveau Projet',
+        '
+        &lt;form method="POST" action="' . route('projects.store') . '"&gt;
+            ' . csrf_field() . '
+            ' . Form::input('title', 'Titre du projet', [
+                'required' => true,
+                'value' => old('title')
+            ], $errors->first('title')) . '
+
+            ' . Form::textarea('description', 'Description', [
+                'rows' => 4,
+                'value' => old('description')
+            ], $errors->first('description')) . '
+
+            ' . Form::grid([
+                Form::select('priority', 'Priorité', [
+                    'low' => 'Basse',
+                    'medium' => 'Moyenne',
+                    'high' => 'Haute'
+                ], old('priority', 'medium')),
+                Form::datetime('deadline', 'Date limite', 'date', [
+                    'value' => old('deadline')
+                ])
+            ], 2) . '
+
+            &lt;div class="flex justify-end space-x-4 pt-6 border-t"&gt;
+                ' . Button::secondary('Annuler', ['onclick' => 'history.back()']) . '
+                ' . Button::withIcon('Créer', 'fas fa-save', 'primary', ['type' => 'submit']) . '
+            &lt;/div&gt;
+        &lt;/form&gt;
+        '
+    ) !!}
+&lt;/div&gt;
+@endsection</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Helper Class -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-magic text-purple-500 mr-2"></i> Créer une Facade (Optionnel)
+            </h2>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+                <div class="bg-purple-600 text-white px-6 py-3">
+                    <h3 class="font-bold">Helper Class UI</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">
+                        Créez une classe helper pour un accès plus simple :
+                    </p>
+
+                    <div class="relative">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="code-block"><code class="language-php">&lt;?php
+// app/Helpers/UI.php
+
+namespace App\Helpers;
+
+use TailwindUI\Button;
+use TailwindUI\Card;
+use TailwindUI\Form;
+use TailwindUI\Alert;
+use TailwindUI\Badge;
+use TailwindUI\Table;
+use TailwindUI\Navigation;
+
+class UI
+{
+    // Button shortcuts
+    public static function button(...$args) { return Button::primary(...$args); }
+    public static function buttonPrimary(...$args) { return Button::primary(...$args); }
+    public static function buttonSecondary(...$args) { return Button::secondary(...$args); }
+    public static function buttonSuccess(...$args) { return Button::success(...$args); }
+    public static function buttonDanger(...$args) { return Button::danger(...$args); }
+    public static function buttonWithIcon(...$args) { return Button::withIcon(...$args); }
+
+    // Card shortcuts
+    public static function card(...$args) { return Card::basic(...$args); }
+    public static function cardWithHeader(...$args) { return Card::withHeader(...$args); }
+    public static function stat(...$args) { return Card::stat(...$args); }
+    public static function emptyState(...$args) { return Card::empty(...$args); }
+
+    // Form shortcuts
+    public static function input(...$args) { return Form::input(...$args); }
+    public static function textarea(...$args) { return Form::textarea(...$args); }
+    public static function select(...$args) { return Form::select(...$args); }
+    public static function checkbox(...$args) { return Form::checkbox(...$args); }
+
+    // Alert shortcuts
+    public static function alertSuccess(...$args) { return Alert::success(...$args); }
+    public static function alertError(...$args) { return Alert::error(...$args); }
+    public static function alertWarning(...$args) { return Alert::warning(...$args); }
+    public static function alertInfo(...$args) { return Alert::info(...$args); }
+
+    // Badge shortcuts
+    public static function badge(...$args) { return Badge::primary(...$args); }
+    public static function status(...$args) { return Badge::status(...$args); }
+    public static function priority(...$args) { return Badge::priority(...$args); }
+
+    // Table shortcuts
+    public static function table(...$args) { return Table::full(...$args); }
+    public static function pagination(...$args) { return Table::pagination(...$args); }
+
+    // Navigation shortcuts
+    public static function breadcrumb(...$args) { return Navigation::breadcrumb(...$args); }
+    public static function tabs(...$args) { return Navigation::tabs(...$args); }
+}
+?&gt;</code></pre>
+                    </div>
+
+                    <p class="text-gray-600 mt-4">
+                        Enregistrez-le dans <code class="bg-gray-100 px-2 py-1 rounded">composer.json</code> :
+                    </p>
+
+                    <div class="relative mt-2">
+                        <pre class="code-block"><code class="language-json">{
+    "autoload": {
+        "files": [
+            "app/Helpers/UI.php"
+        ]
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-purple-600 text-white px-6 py-3">
+                    <h3 class="font-bold">Utilisation simplifiée</h3>
+                </div>
+                <div class="p-6">
+                    <div class="relative">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="code-block"><code class="language-php">{{-- Dans vos vues Blade --}}
+
+@php use App\Helpers\UI; @endphp
+
+{!! UI::stat('Projets', '12', 'fas fa-folder', 'blue') !!}
+
+{!! UI::input('email', 'Email', ['required' => true]) !!}
+
+{!! UI::buttonWithIcon('Enregistrer', 'fas fa-save', 'primary') !!}
+
+{!! UI::status('active') !!}
+
+{!! UI::alertSuccess('Opération réussie !') !!}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blade Components -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-puzzle-piece text-blue-500 mr-2"></i> Composants Blade (Avancé)
+            </h2>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-blue-600 text-white px-6 py-3">
+                    <h3 class="font-bold">Créer des composants Blade</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">
+                        Pour une syntaxe encore plus propre, créez des composants Blade :
+                    </p>
+
+                    <div class="relative mb-6">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="code-block"><code class="language-php">&lt;?php
+// app/View/Components/UIButton.php
+
+namespace App\View\Components;
+
+use Illuminate\View\Component;
+use TailwindUI\Button;
+
+class UIButton extends Component
+{
+    public string $text;
+    public string $variant;
+    public string $size;
+    public array $attributes;
+
+    public function __construct(
+        string $text,
+        string $variant = 'primary',
+        string $size = 'md',
+        array $attributes = []
+    ) {
+        $this->text = $text;
+        $this->variant = $variant;
+        $this->size = $size;
+        $this->attributes = $attributes;
+    }
+
+    public function render()
+    {
+        $method = $this->variant;
+        return Button::$method($this->text, $this->attributes, $this->size);
+    }
+}
+?&gt;</code></pre>
+                    </div>
+
+                    <p class="text-gray-600 mb-2">
+                        Utilisation dans Blade :
+                    </p>
+
+                    <div class="relative">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="code-block"><code class="language-html">&lt;!-- Utilisation avec composant Blade --&gt;
+&lt;x-u-i-button text="Enregistrer" variant="primary" /&gt;
+&lt;x-u-i-button text="Annuler" variant="secondary" /&gt;
+&lt;x-u-i-button text="Supprimer" variant="danger" /&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example Controller -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-server text-orange-500 mr-2"></i> Exemple de Controller
+            </h2>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-orange-600 text-white px-6 py-3">
+                    <h3 class="font-bold">ProjectController.php</h3>
+                </div>
+                <div class="p-6">
+                    <div class="relative">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <pre class="code-block"><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Project;
+use Illuminate\Http\Request;
+
+class ProjectController extends Controller
+{
+    public function index()
+    {
+        $projects = Project::with('tasks')
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->paginate(10);
+
+        // Stats pour les cartes
+        $stats = [
+            'total' => Project::where('user_id', auth()->id())->count(),
+            'active' => Project::where('user_id', auth()->id())
+                ->where('status', 'active')->count(),
+            'completed' => Project::where('user_id', auth()->id())
+                ->where('status', 'completed')->count(),
+        ];
+
+        return view('projects.index', compact('projects', 'stats'));
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'priority' => 'required|in:low,medium,high',
+            'deadline' => 'nullable|date',
+        ]);
+
+        $project = auth()->user()->projects()->create($validated);
+
+        return redirect()
+            ->route('projects.show', $project)
+            ->with('success', 'Projet créé avec succès !');
+    }
+
+    public function destroy(Project $project)
+    {
+        $this->authorize('delete', $project);
+
+        $project->delete();
+
+        return redirect()
+            ->route('projects.index')
+            ->with('success', 'Projet supprimé avec succès.');
+    }
+}
+?&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tips -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-lightbulb text-yellow-500 mr-2"></i> Conseils et Astuces
+            </h2>
+
+            <div class="space-y-4">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-900 mb-2">
+                        <i class="fas fa-check text-green-500 mr-2"></i> Validation des erreurs
+                    </h3>
+                    <p class="text-gray-600">
+                        Utilisez <code class="bg-gray-100 px-1 rounded">$errors->first('field')</code> pour afficher les erreurs Laravel dans les champs Form :
+                    </p>
+                    <pre class="bg-gray-100 p-2 rounded mt-2 text-sm"><code>Form::input('email', 'Email', [], $errors->first('email'))</code></pre>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-900 mb-2">
+                        <i class="fas fa-check text-green-500 mr-2"></i> Old input
+                    </h3>
+                    <p class="text-gray-600">
+                        Conservez les anciennes valeurs avec <code class="bg-gray-100 px-1 rounded">old()</code> :
+                    </p>
+                    <pre class="bg-gray-100 p-2 rounded mt-2 text-sm"><code>Form::input('title', 'Titre', ['value' => old('title')])</code></pre>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-900 mb-2">
+                        <i class="fas fa-check text-green-500 mr-2"></i> Flash messages
+                    </h3>
+                    <p class="text-gray-600">
+                        Créez un partial pour les messages flash dans votre layout :
+                    </p>
+                    <pre class="bg-gray-100 p-2 rounded mt-2 text-sm"><code>@if(session('success'))
+    {!! \TailwindUI\Alert::success(session('success')) !!}
+@endif</code></pre>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-900 mb-2">
+                        <i class="fas fa-check text-green-500 mr-2"></i> Routes nommées
+                    </h3>
+                    <p class="text-gray-600">
+                        Utilisez <code class="bg-gray-100 px-1 rounded">route()</code> pour les URLs dans les boutons :
+                    </p>
+                    <pre class="bg-gray-100 p-2 rounded mt-2 text-sm"><code>Button::primary('Voir', ['onclick' => 'window.location="' . route('projects.show', $project) . '"'])</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <section>
+            <div class="grid md:grid-cols-2 gap-6">
+                <a href="installation.html" class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition">
+                    <h3 class="font-bold text-lg mb-2">
+                        <i class="fas fa-arrow-left text-gray-500 mr-2"></i> Guide PHP Standard
+                    </h3>
+                    <p class="text-gray-600">Retour au guide d'installation PHP/HTML classique.</p>
+                </a>
+
+                <a href="index.html#components" class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition">
+                    <h3 class="font-bold text-lg mb-2">
+                        <i class="fas fa-puzzle-piece text-purple-500 mr-2"></i> Voir tous les Composants
+                    </h3>
+                    <p class="text-gray-600">Explorez tous les composants avec des exemples de code.</p>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-400">
+                &copy; 2024 TailwindUI PHP - IAGE Formation L2
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.parentElement.querySelector('code');
+            const text = codeBlock.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copié !';
+                setTimeout(() => { button.innerHTML = originalText; }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
