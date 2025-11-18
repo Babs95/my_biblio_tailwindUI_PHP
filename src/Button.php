@@ -15,16 +15,16 @@ class Button extends Component
     /**
      * Classes de base pour tous les boutons
      */
-    private const BASE_CLASSES = 'inline-flex items-center px-4 py-2 border font-medium rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+    private const BASE_CLASSES = 'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 transform hover:scale-[1.02] active:scale-[0.98] shadow-sm hover:shadow-md';
 
     /**
      * Tailles disponibles
      */
     private const SIZES = [
-        'sm' => 'px-3 py-1.5 text-sm',
-        'md' => 'px-4 py-2 text-base',
-        'lg' => 'px-6 py-3 text-lg',
-        'xl' => 'px-8 py-4 text-xl',
+        'sm' => 'px-3.5 py-2 text-sm gap-1.5',
+        'md' => 'px-5 py-2.5 text-sm gap-2',
+        'lg' => 'px-6 py-3 text-base gap-2.5',
+        'xl' => 'px-8 py-4 text-lg gap-3',
     ];
 
     /**
@@ -133,15 +133,15 @@ class Button extends Component
     private static function getVariantClasses(string $variant): string
     {
         $variants = [
-            'primary' => 'border-transparent text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500',
-            'secondary' => 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-gray-500',
-            'success' => 'border-transparent text-white bg-green-600 hover:bg-green-700 focus:ring-green-500',
-            'danger' => 'border-transparent text-white bg-red-600 hover:bg-red-700 focus:ring-red-500',
-            'warning' => 'border-transparent text-white bg-orange-600 hover:bg-orange-700 focus:ring-orange-500',
-            'info' => 'border-transparent text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-cyan-500',
-            'outline-blue' => 'border-blue-600 text-blue-600 bg-transparent hover:bg-blue-50 focus:ring-blue-500',
-            'outline-gray' => 'border-gray-600 text-gray-600 bg-transparent hover:bg-gray-50 focus:ring-gray-500',
-            'outline-red' => 'border-red-600 text-red-600 bg-transparent hover:bg-red-50 focus:ring-red-500',
+            'primary' => 'text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:ring-blue-500 shadow-blue-500/25',
+            'secondary' => 'text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 focus:ring-gray-500',
+            'success' => 'text-white bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 focus:ring-emerald-500 shadow-emerald-500/25',
+            'danger' => 'text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 focus:ring-red-500 shadow-red-500/25',
+            'warning' => 'text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 focus:ring-amber-500 shadow-amber-500/25',
+            'info' => 'text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 focus:ring-cyan-500 shadow-cyan-500/25',
+            'outline-blue' => 'text-blue-600 bg-transparent border-2 border-blue-600 hover:bg-blue-50 focus:ring-blue-500',
+            'outline-gray' => 'text-gray-600 bg-transparent border-2 border-gray-300 hover:bg-gray-50 hover:border-gray-400 focus:ring-gray-500',
+            'outline-red' => 'text-red-600 bg-transparent border-2 border-red-600 hover:bg-red-50 focus:ring-red-500',
         ];
 
         return $variants[$variant] ?? $variants['primary'];
@@ -153,7 +153,7 @@ class Button extends Component
     public static function group(array $buttons): string
     {
         return sprintf(
-            '<div class="inline-flex rounded-lg shadow-sm" role="group">%s</div>',
+            '<div class="inline-flex rounded-xl shadow-sm divide-x divide-gray-200" role="group">%s</div>',
             implode('', $buttons)
         );
     }

@@ -217,13 +217,13 @@ echo Table::full($headers, $rows);
 
 ### Exemple 1 : Page de Login
 
-#### Avant (TaskCollab/views/auth/login.php)
+#### Avant (views/auth/login.php)
 ```php
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Connexion - TaskCollab</title>
+    <title>Connexion - Mon Application</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-blue-500 to-purple-600 min-h-screen flex items-center justify-center">
@@ -282,7 +282,7 @@ use App\Utils\Session;
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Connexion - TaskCollab</title>
+    <title>Connexion - Mon Application</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-blue-500 to-purple-600 min-h-screen flex items-center justify-center">

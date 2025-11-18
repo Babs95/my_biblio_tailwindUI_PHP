@@ -16,7 +16,7 @@ class Alert extends Component
     /**
      * Classes de base pour toutes les alertes
      */
-    private const BASE_CLASSES = 'border px-4 py-3 rounded relative mb-4';
+    private const BASE_CLASSES = 'px-4 py-4 rounded-xl relative mb-4 backdrop-blur-sm';
 
     /**
      * Alert de succès (vert)
@@ -84,7 +84,7 @@ class Alert extends Component
 
         // Bouton de fermeture
         if ($dismissible) {
-            $html .= '<button type="button" class="ml-3 inline-flex text-gray-400 hover:text-gray-500 focus:outline-none" onclick="this.parentElement.remove()">';
+            $html .= '<button type="button" class="ml-3 inline-flex text-gray-400 hover:text-gray-600 focus:outline-none transition-colors rounded-lg p-1 hover:bg-gray-100" onclick="this.closest(\'[role=alert]\').remove()">';
             $html .= '<svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">';
             $html .= '<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>';
             $html .= '</svg>';
@@ -103,10 +103,10 @@ class Alert extends Component
     private static function getTypeColors(string $type): string
     {
         $colors = [
-            'success' => 'bg-green-100 border-green-400 text-green-700',
-            'error' => 'bg-red-100 border-red-400 text-red-700',
-            'warning' => 'bg-yellow-100 border-yellow-400 text-yellow-700',
-            'info' => 'bg-blue-100 border-blue-400 text-blue-700',
+            'success' => 'bg-emerald-50 border border-emerald-200 text-emerald-800',
+            'error' => 'bg-red-50 border border-red-200 text-red-800',
+            'warning' => 'bg-amber-50 border border-amber-200 text-amber-800',
+            'info' => 'bg-blue-50 border border-blue-200 text-blue-800',
         ];
 
         return $colors[$type] ?? $colors['info'];
@@ -118,10 +118,10 @@ class Alert extends Component
     private static function getIcon(string $type): string
     {
         $icons = [
-            'success' => '<i class="fas fa-check-circle text-lg"></i>',
-            'error' => '<i class="fas fa-exclamation-circle text-lg"></i>',
-            'warning' => '<i class="fas fa-exclamation-triangle text-lg"></i>',
-            'info' => '<i class="fas fa-info-circle text-lg"></i>',
+            'success' => '<i class="fas fa-check-circle text-xl text-emerald-500"></i>',
+            'error' => '<i class="fas fa-exclamation-circle text-xl text-red-500"></i>',
+            'warning' => '<i class="fas fa-exclamation-triangle text-xl text-amber-500"></i>',
+            'info' => '<i class="fas fa-info-circle text-xl text-blue-500"></i>',
         ];
 
         return $icons[$type] ?? $icons['info'];
@@ -168,10 +168,10 @@ class Alert extends Component
         $colors = self::getTypeColors($type);
         $icon = self::getIcon($type);
 
-        $html = '<div id="toast" class="fixed top-4 right-4 z-50 ' . $colors . ' ' . self::BASE_CLASSES . ' shadow-lg animate-slide-in-right" role="alert">';
-        $html .= '<div class="flex items-start">';
+        $html = '<div id="toast" class="fixed top-4 right-4 z-50 ' . $colors . ' ' . self::BASE_CLASSES . ' shadow-xl transform transition-all duration-300 animate-slide-in-right" role="alert">';
+        $html .= '<div class="flex items-center">';
         $html .= '<div class="flex-shrink-0">' . $icon . '</div>';
-        $html .= '<div class="ml-3">' . self::escape($message) . '</div>';
+        $html .= '<div class="ml-3 font-medium">' . self::escape($message) . '</div>';
         $html .= '</div>';
         $html .= '</div>';
 

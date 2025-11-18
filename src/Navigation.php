@@ -18,7 +18,7 @@ class Navigation extends Component
     public static function navbar(string $brand, array $links = [], ?array $userMenu = null, array $attributes = []): string
     {
         $classes = self::classNames([
-            'bg-white shadow-lg',
+            'bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-100',
             $attributes['class'] ?? '',
         ]);
 
@@ -79,10 +79,10 @@ class Navigation extends Component
     public static function link(string $text, string $url, bool $active = false, ?string $icon = null, array $attributes = []): string
     {
         $classes = self::classNames([
-            'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium',
+            'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-semibold transition-all duration-200',
             $active
-                ? 'border-blue-500 text-gray-900'
-                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
+                ? 'border-blue-600 text-gray-900'
+                : 'border-transparent text-gray-500 hover:border-blue-300 hover:text-gray-900',
             $attributes['class'] ?? '',
         ]);
 
@@ -121,12 +121,12 @@ class Navigation extends Component
             $html .= '<li class="flex items-center">';
 
             if ($isLast) {
-                $html .= '<span class="text-gray-700 font-medium">' . self::escape($item['label']) . '</span>';
+                $html .= '<span class="text-gray-900 font-semibold">' . self::escape($item['label']) . '</span>';
             } else {
-                $html .= '<a href="' . self::escape($item['url']) . '" class="hover:text-gray-700">';
+                $html .= '<a href="' . self::escape($item['url']) . '" class="hover:text-blue-600 transition-colors">';
                 $html .= self::escape($item['label']);
                 $html .= '</a>';
-                $html .= '<i class="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>';
+                $html .= '<i class="fas fa-chevron-right mx-3 text-gray-300 text-xs"></i>';
             }
 
             $html .= '</li>';
@@ -144,7 +144,7 @@ class Navigation extends Component
     public static function tabs(array $tabs, string $active, array $attributes = []): string
     {
         $classes = self::classNames([
-            'border-b border-gray-200',
+            'border-b border-gray-100',
             $attributes['class'] ?? '',
         ]);
 
@@ -157,10 +157,10 @@ class Navigation extends Component
             $isActive = $key === $active;
 
             $linkClasses = self::classNames([
-                'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
+                'whitespace-nowrap py-4 px-1 border-b-2 font-semibold text-sm transition-all duration-200',
                 $isActive
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                    ? 'border-blue-600 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300',
             ]);
 
             $content = '';
@@ -170,8 +170,8 @@ class Navigation extends Component
             $content .= self::escape($tab['label']);
 
             if (isset($tab['count'])) {
-                $badgeClass = $isActive ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600';
-                $content .= ' <span class="ml-2 py-0.5 px-2 rounded-full text-xs font-medium ' . $badgeClass . '">';
+                $badgeClass = $isActive ? 'bg-blue-50 text-blue-600 ring-1 ring-inset ring-blue-600/20' : 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/20';
+                $content .= ' <span class="ml-2 py-0.5 px-2.5 rounded-lg text-xs font-semibold ' . $badgeClass . '">';
                 $content .= $tab['count'];
                 $content .= '</span>';
             }
@@ -205,23 +205,23 @@ class Navigation extends Component
             $isActive = $key === $active;
 
             $linkClasses = self::classNames([
-                'group flex items-center px-3 py-2 text-sm font-medium rounded-md',
+                'group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200',
                 $isActive
-                    ? 'bg-blue-100 text-blue-700'
+                    ? 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20'
                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
             ]);
 
             $html .= '<a href="' . self::escape($item['url']) . '" class="' . $linkClasses . '">';
 
             if (isset($item['icon'])) {
-                $iconClass = $isActive ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-500';
-                $html .= '<i class="' . self::escape($item['icon']) . ' mr-3 ' . $iconClass . '"></i>';
+                $iconClass = $isActive ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-600';
+                $html .= '<i class="' . self::escape($item['icon']) . ' mr-3 ' . $iconClass . ' transition-colors"></i>';
             }
 
             $html .= self::escape($item['label']);
 
             if (isset($item['badge'])) {
-                $html .= '<span class="ml-auto inline-block py-0.5 px-3 text-xs rounded-full bg-gray-100 text-gray-600">';
+                $html .= '<span class="ml-auto inline-block py-0.5 px-2.5 text-xs font-semibold rounded-lg bg-gray-100 text-gray-600">';
                 $html .= self::escape($item['badge']);
                 $html .= '</span>';
             }
@@ -250,23 +250,23 @@ class Navigation extends Component
 
         // Trigger
         $html .= '<div>';
-        $html .= '<button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none" onclick="this.nextElementSibling.classList.toggle(\'hidden\')">';
+        $html .= '<button type="button" class="inline-flex justify-center w-full rounded-xl border border-gray-200 shadow-sm px-4 py-2.5 bg-white text-sm font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200" onclick="this.nextElementSibling.classList.toggle(\'hidden\')">';
         $html .= $trigger;
-        $html .= ' <i class="fas fa-chevron-down ml-2 -mr-1"></i>';
+        $html .= ' <i class="fas fa-chevron-down ml-2 -mr-1 text-gray-400"></i>';
         $html .= '</button>';
 
         // Menu items
-        $html .= '<div class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">';
-        $html .= '<div class="py-1">';
+        $html .= '<div class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-xl shadow-lg bg-white border border-gray-100 z-10">';
+        $html .= '<div class="py-2">';
 
         foreach ($items as $item) {
             if ($item === 'divider') {
-                $html .= '<div class="border-t border-gray-100"></div>';
+                $html .= '<div class="border-t border-gray-100 my-1"></div>';
             } else {
-                $html .= '<a href="' . self::escape($item['url']) . '" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">';
+                $html .= '<a href="' . self::escape($item['url']) . '" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">';
 
                 if (isset($item['icon'])) {
-                    $html .= '<i class="' . self::escape($item['icon']) . ' mr-2"></i>';
+                    $html .= '<i class="' . self::escape($item['icon']) . ' mr-2 text-gray-400"></i>';
                 }
 
                 $html .= self::escape($item['label']);
