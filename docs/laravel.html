@@ -10,7 +10,28 @@
     <style>
         .gradient-bg { background: linear-gradient(135deg, #f43f5e 0%, #dc2626 100%); }
         .code-block { max-height: 500px; overflow-y: auto; }
-        .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; }
+        .copy-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: all 0.2s ease-out;
+        }
+        .relative:hover .copy-btn,
+        .copy-btn:focus {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .copy-btn.copied {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            animation: copyPulse 0.3s ease-out;
+        }
+        @keyframes copyPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -95,7 +116,7 @@
                     </p>
 
                     <div class="relative">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="code-block"><code class="language-php">&lt;?php
@@ -120,7 +141,7 @@ namespace TailwindUI;
                     </p>
 
                     <div class="relative mb-4">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto"><code>npm install -D tailwindcss postcss autoprefixer
@@ -132,7 +153,7 @@ npx tailwindcss init -p</code></pre>
                     </p>
 
                     <div class="relative">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="code-block"><code class="language-html">&lt;!-- resources/views/layouts/app.blade.php --&gt;
@@ -174,7 +195,7 @@ npx tailwindcss init -p</code></pre>
                 </div>
                 <div class="p-6">
                     <div class="relative">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="code-block"><code class="language-php">{{-- resources/views/dashboard.blade.php --}}
@@ -234,7 +255,7 @@ npx tailwindcss init -p</code></pre>
                 </div>
                 <div class="p-6">
                     <div class="relative">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="code-block"><code class="language-php">{{-- resources/views/projects/create.blade.php --}}
@@ -305,7 +326,7 @@ npx tailwindcss init -p</code></pre>
                     </p>
 
                     <div class="relative">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="code-block"><code class="language-php">&lt;?php
@@ -387,7 +408,7 @@ class UI
                 </div>
                 <div class="p-6">
                     <div class="relative">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="code-block"><code class="language-php">{{-- Dans vos vues Blade --}}
@@ -424,7 +445,7 @@ class UI
                     </p>
 
                     <div class="relative mb-6">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="code-block"><code class="language-php">&lt;?php
@@ -468,7 +489,7 @@ class UIButton extends Component
                     </p>
 
                     <div class="relative">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="code-block"><code class="language-html">&lt;!-- Utilisation avec composant Blade --&gt;
@@ -492,7 +513,7 @@ class UIButton extends Component
                 </div>
                 <div class="p-6">
                     <div class="relative">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="code-block"><code class="language-php">&lt;?php
@@ -644,10 +665,35 @@ class ProjectController extends Controller
         function copyCode(button) {
             const codeBlock = button.parentElement.querySelector('code');
             const text = codeBlock.textContent;
+
             navigator.clipboard.writeText(text).then(() => {
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-check"></i> Copié !';
-                setTimeout(() => { button.innerHTML = originalText; }, 2000);
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check mr-1.5"></i>Copié';
+                button.classList.add('copied');
+
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-9999px';
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check mr-1.5"></i>Copié';
+                button.classList.add('copied');
+
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.classList.remove('copied');
+                }, 2000);
             });
         }
     </script>
