@@ -13,6 +13,43 @@ namespace TailwindUI;
 class FlyoutMenu extends Component
 {
     /**
+     * Script JavaScript pour la gestion des menus flyout
+     */
+    private static function getScript(): string
+    {
+        return '<script>
+            (function() {
+                if (window.flyoutMenuInitialized) return;
+                window.flyoutMenuInitialized = true;
+
+                document.addEventListener("click", function(e) {
+                    var flyouts = document.querySelectorAll("[data-flyout-menu]");
+                    flyouts.forEach(function(flyout) {
+                        var button = flyout.querySelector("[data-flyout-trigger]");
+                        var menu = flyout.querySelector("[data-flyout-content]");
+                        if (menu && !flyout.contains(e.target)) {
+                            menu.classList.add("hidden");
+                        }
+                    });
+                });
+            })();
+
+            function toggleFlyout(id) {
+                var menu = document.getElementById(id);
+                if (menu) {
+                    var wasHidden = menu.classList.contains("hidden");
+                    // Fermer tous les autres menus
+                    document.querySelectorAll("[data-flyout-content]").forEach(function(m) {
+                        if (m.id !== id) m.classList.add("hidden");
+                    });
+                    // Toggle ce menu
+                    menu.classList.toggle("hidden");
+                }
+            }
+        </script>';
+    }
+
+    /**
      * Menu flyout simple
      */
     public static function simple(string $trigger, array $items, array $attributes = []): string
@@ -26,16 +63,17 @@ class FlyoutMenu extends Component
 
         $id = 'flyout-' . uniqid();
 
-        $html = '<div class="' . $classes . '" ' . self::attributes($attributes) . '>';
+        $html = self::getScript();
+        $html .= '<div class="' . $classes . '" data-flyout-menu ' . self::attributes($attributes) . '>';
 
         // Trigger button
-        $html .= '<button type="button" class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="document.getElementById(\'' . $id . '\').classList.toggle(\'hidden\')" onblur="setTimeout(() => document.getElementById(\'' . $id . '\').classList.add(\'hidden\'), 200)">';
+        $html .= '<button type="button" data-flyout-trigger class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="toggleFlyout(\'' . $id . '\')">';
         $html .= self::escape($trigger);
         $html .= '<i class="fas fa-chevron-down ml-2 text-xs text-gray-400"></i>';
         $html .= '</button>';
 
         // Dropdown panel
-        $html .= '<div id="' . $id . '" class="hidden absolute left-0 z-50 mt-2 w-56 origin-top-left rounded-xl bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">';
+        $html .= '<div id="' . $id . '" data-flyout-content class="hidden absolute left-0 z-50 mt-2 w-56 origin-top-left rounded-xl bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">';
         $html .= '<div class="py-2">';
 
         foreach ($items as $item) {
@@ -73,16 +111,17 @@ class FlyoutMenu extends Component
 
         $id = 'flyout-' . uniqid();
 
-        $html = '<div class="' . $classes . '" ' . self::attributes($attributes) . '>';
+        $html = self::getScript();
+        $html .= '<div class="' . $classes . '" data-flyout-menu ' . self::attributes($attributes) . '>';
 
         // Trigger button
-        $html .= '<button type="button" class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="document.getElementById(\'' . $id . '\').classList.toggle(\'hidden\')">';
+        $html .= '<button type="button" data-flyout-trigger class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="toggleFlyout(\'' . $id . '\')">';
         $html .= self::escape($trigger);
         $html .= '<i class="fas fa-chevron-down ml-2 text-xs text-gray-400"></i>';
         $html .= '</button>';
 
         // Dropdown panel
-        $html .= '<div id="' . $id . '" class="hidden absolute left-0 z-50 mt-3 w-80 origin-top-left">';
+        $html .= '<div id="' . $id . '" data-flyout-content class="hidden absolute left-0 z-50 mt-3 w-80 origin-top-left">';
         $html .= '<div class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 overflow-hidden">';
         $html .= '<div class="p-4 space-y-1">';
 
@@ -128,16 +167,17 @@ class FlyoutMenu extends Component
 
         $id = 'mega-' . uniqid();
 
-        $html = '<div class="' . $classes . '" ' . self::attributes($attributes) . '>';
+        $html = self::getScript();
+        $html .= '<div class="' . $classes . '" data-flyout-menu ' . self::attributes($attributes) . '>';
 
         // Trigger button
-        $html .= '<button type="button" class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="document.getElementById(\'' . $id . '\').classList.toggle(\'hidden\')">';
+        $html .= '<button type="button" data-flyout-trigger class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="toggleFlyout(\'' . $id . '\')">';
         $html .= self::escape($trigger);
         $html .= '<i class="fas fa-chevron-down ml-2 text-xs text-gray-400"></i>';
         $html .= '</button>';
 
         // Mega menu panel
-        $html .= '<div id="' . $id . '" class="hidden absolute left-1/2 z-50 mt-3 w-screen max-w-4xl -translate-x-1/2 transform">';
+        $html .= '<div id="' . $id . '" data-flyout-content class="hidden absolute left-1/2 z-50 mt-3 w-screen max-w-4xl -translate-x-1/2 transform">';
         $html .= '<div class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 overflow-hidden">';
 
         $html .= '<div class="grid grid-cols-1 lg:grid-cols-' . (count($sections) + ($featured ? 1 : 0)) . ' divide-x divide-gray-100">';
@@ -215,10 +255,11 @@ class FlyoutMenu extends Component
 
         $id = 'flyout-grid-' . uniqid();
 
-        $html = '<div class="' . $classes . '" ' . self::attributes($attributes) . '>';
+        $html = self::getScript();
+        $html .= '<div class="' . $classes . '" data-flyout-menu ' . self::attributes($attributes) . '>';
 
         // Trigger button
-        $html .= '<button type="button" class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="document.getElementById(\'' . $id . '\').classList.toggle(\'hidden\')">';
+        $html .= '<button type="button" data-flyout-trigger class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="toggleFlyout(\'' . $id . '\')">';
         $html .= self::escape($trigger);
         $html .= '<i class="fas fa-chevron-down ml-2 text-xs text-gray-400"></i>';
         $html .= '</button>';
@@ -226,7 +267,7 @@ class FlyoutMenu extends Component
         // Grid panel
         $width = $cols === 2 ? 'w-64' : ($cols === 3 ? 'w-80' : 'w-96');
 
-        $html .= '<div id="' . $id . '" class="hidden absolute left-0 z-50 mt-3 ' . $width . ' origin-top-left">';
+        $html .= '<div id="' . $id . '" data-flyout-content class="hidden absolute left-0 z-50 mt-3 ' . $width . ' origin-top-left">';
         $html .= '<div class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 p-4">';
         $html .= '<div class="grid grid-cols-' . $cols . ' gap-2">';
 
@@ -262,16 +303,17 @@ class FlyoutMenu extends Component
 
         $id = 'flyout-footer-' . uniqid();
 
-        $html = '<div class="' . $classes . '" ' . self::attributes($attributes) . '>';
+        $html = self::getScript();
+        $html .= '<div class="' . $classes . '" data-flyout-menu ' . self::attributes($attributes) . '>';
 
         // Trigger button
-        $html .= '<button type="button" class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="document.getElementById(\'' . $id . '\').classList.toggle(\'hidden\')">';
+        $html .= '<button type="button" data-flyout-trigger class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="toggleFlyout(\'' . $id . '\')">';
         $html .= self::escape($trigger);
         $html .= '<i class="fas fa-chevron-down ml-2 text-xs text-gray-400"></i>';
         $html .= '</button>';
 
         // Dropdown panel
-        $html .= '<div id="' . $id . '" class="hidden absolute left-0 z-50 mt-3 w-72 origin-top-left">';
+        $html .= '<div id="' . $id . '" data-flyout-content class="hidden absolute left-0 z-50 mt-3 w-72 origin-top-left">';
         $html .= '<div class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 overflow-hidden">';
 
         // Items
