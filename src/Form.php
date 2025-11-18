@@ -15,12 +15,12 @@ class Form extends Component
     /**
      * Classes de base pour les inputs
      */
-    private const INPUT_BASE = 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent';
+    private const INPUT_BASE = 'w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 hover:border-gray-300';
 
     /**
      * Classes de base pour les labels
      */
-    private const LABEL_BASE = 'block text-sm font-medium text-gray-700 mb-2';
+    private const LABEL_BASE = 'block text-sm font-semibold text-gray-700 mb-2';
 
     /**
      * Input text/email/password/number/etc.
@@ -152,13 +152,13 @@ class Form extends Component
             'type' => 'checkbox',
             'id' => $name,
             'name' => $name,
-            'class' => 'h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded',
+            'class' => 'h-5 w-5 text-blue-600 focus:ring-blue-500/20 border-gray-300 rounded-md transition-colors',
             'checked' => $checked,
         ], $attributes);
 
-        $html = '<div class="mb-4 flex items-start">';
+        $html = '<div class="mb-4 flex items-center">';
         $html .= sprintf('<input %s />', self::attributes($attrs));
-        $html .= '<label for="' . self::escape($name) . '" class="ml-3 text-sm text-gray-700">';
+        $html .= '<label for="' . self::escape($name) . '" class="ml-3 text-sm font-medium text-gray-700 cursor-pointer select-none">';
         $html .= self::escape($label);
         $html .= '</label>';
         $html .= '</div>';
@@ -180,13 +180,13 @@ class Form extends Component
             'id' => $name . '_' . $value,
             'name' => $name,
             'value' => $value,
-            'class' => 'h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300',
+            'class' => 'h-5 w-5 text-blue-600 focus:ring-blue-500/20 border-gray-300 transition-colors',
             'checked' => $checked,
         ], $attributes);
 
-        $html = '<div class="flex items-center mb-2">';
+        $html = '<div class="flex items-center mb-3">';
         $html .= sprintf('<input %s />', self::attributes($attrs));
-        $html .= '<label for="' . self::escape($name . '_' . $value) . '" class="ml-3 text-sm text-gray-700">';
+        $html .= '<label for="' . self::escape($name . '_' . $value) . '" class="ml-3 text-sm font-medium text-gray-700 cursor-pointer select-none">';
         $html .= self::escape($label);
         $html .= '</label>';
         $html .= '</div>';
@@ -202,7 +202,7 @@ class Form extends Component
         $html = self::renderLabel($name, $label, $attributes['required'] ?? false);
 
         $classes = self::classNames([
-            'block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none',
+            'block w-full text-sm text-gray-900 border border-gray-200 rounded-xl cursor-pointer bg-gray-50 focus:outline-none file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors',
             $error ? 'border-red-500' : '',
             $attributes['class'] ?? '',
         ]);
@@ -240,7 +240,7 @@ class Form extends Component
             'id' => $name,
             'name' => $name,
             'value' => $value,
-            'class' => 'w-full h-12 border border-gray-300 rounded-lg cursor-pointer',
+            'class' => 'w-full h-14 border border-gray-200 rounded-xl cursor-pointer bg-gray-50 hover:border-gray-300 transition-colors',
         ], $attributes);
 
         $html .= sprintf('<input %s />', self::attributes($attrs));
@@ -300,7 +300,7 @@ class Form extends Component
      */
     private static function renderError(string $error): string
     {
-        return '<p class="mt-1 text-sm text-red-600">' . self::escape($error) . '</p>';
+        return '<p class="mt-2 text-sm text-red-600 flex items-center"><i class="fas fa-exclamation-circle mr-1.5"></i>' . self::escape($error) . '</p>';
     }
 
     /**
@@ -308,7 +308,7 @@ class Form extends Component
      */
     private static function renderHelp(string $help): string
     {
-        return '<p class="mt-1 text-sm text-gray-500">' . self::escape($help) . '</p>';
+        return '<p class="mt-2 text-sm text-gray-500">' . self::escape($help) . '</p>';
     }
 
     /**

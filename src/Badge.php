@@ -16,14 +16,14 @@ class Badge extends Component
     /**
      * Classes de base pour tous les badges
      */
-    private const BASE_CLASSES = 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium';
+    private const BASE_CLASSES = 'inline-flex items-center px-3 py-1 rounded-lg text-xs font-semibold tracking-wide';
 
     /**
      * Badge primaire (bleu)
      */
     public static function primary(string $text, array $attributes = []): string
     {
-        return self::render($text, 'bg-blue-100 text-blue-800', $attributes);
+        return self::render($text, 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20', $attributes);
     }
 
     /**
@@ -31,7 +31,7 @@ class Badge extends Component
      */
     public static function success(string $text, array $attributes = []): string
     {
-        return self::render($text, 'bg-green-100 text-green-800', $attributes);
+        return self::render($text, 'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20', $attributes);
     }
 
     /**
@@ -39,7 +39,7 @@ class Badge extends Component
      */
     public static function danger(string $text, array $attributes = []): string
     {
-        return self::render($text, 'bg-red-100 text-red-800', $attributes);
+        return self::render($text, 'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20', $attributes);
     }
 
     /**
@@ -47,7 +47,7 @@ class Badge extends Component
      */
     public static function warning(string $text, array $attributes = []): string
     {
-        return self::render($text, 'bg-orange-100 text-orange-800', $attributes);
+        return self::render($text, 'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20', $attributes);
     }
 
     /**
@@ -55,7 +55,7 @@ class Badge extends Component
      */
     public static function info(string $text, array $attributes = []): string
     {
-        return self::render($text, 'bg-cyan-100 text-cyan-800', $attributes);
+        return self::render($text, 'bg-cyan-50 text-cyan-700 ring-1 ring-inset ring-cyan-600/20', $attributes);
     }
 
     /**
@@ -63,7 +63,7 @@ class Badge extends Component
      */
     public static function secondary(string $text, array $attributes = []): string
     {
-        return self::render($text, 'bg-gray-100 text-gray-800', $attributes);
+        return self::render($text, 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/20', $attributes);
     }
 
     /**
@@ -72,15 +72,15 @@ class Badge extends Component
     public static function status(string $status, ?string $label = null): string
     {
         $statusMap = [
-            'active' => ['class' => 'bg-green-100 text-green-800', 'label' => 'Actif'],
-            'inactive' => ['class' => 'bg-gray-100 text-gray-800', 'label' => 'Inactif'],
-            'pending' => ['class' => 'bg-yellow-100 text-yellow-800', 'label' => 'En attente'],
-            'completed' => ['class' => 'bg-green-100 text-green-800', 'label' => 'Terminé'],
-            'done' => ['class' => 'bg-green-100 text-green-800', 'label' => 'Terminé'],
-            'in_progress' => ['class' => 'bg-blue-100 text-blue-800', 'label' => 'En cours'],
-            'todo' => ['class' => 'bg-gray-100 text-gray-800', 'label' => 'À faire'],
-            'cancelled' => ['class' => 'bg-red-100 text-red-800', 'label' => 'Annulé'],
-            'archived' => ['class' => 'bg-gray-100 text-gray-800', 'label' => 'Archivé'],
+            'active' => ['class' => 'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20', 'label' => 'Actif'],
+            'inactive' => ['class' => 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/20', 'label' => 'Inactif'],
+            'pending' => ['class' => 'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20', 'label' => 'En attente'],
+            'completed' => ['class' => 'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20', 'label' => 'Terminé'],
+            'done' => ['class' => 'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20', 'label' => 'Terminé'],
+            'in_progress' => ['class' => 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20', 'label' => 'En cours'],
+            'todo' => ['class' => 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/20', 'label' => 'À faire'],
+            'cancelled' => ['class' => 'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20', 'label' => 'Annulé'],
+            'archived' => ['class' => 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/20', 'label' => 'Archivé'],
         ];
 
         $config = $statusMap[strtolower($status)] ?? ['class' => 'bg-gray-100 text-gray-800', 'label' => ucfirst($status)];
@@ -95,10 +95,10 @@ class Badge extends Component
     public static function priority(string $priority, ?string $label = null): string
     {
         $priorityMap = [
-            'low' => ['class' => 'bg-gray-100 text-gray-800', 'label' => 'Basse'],
-            'medium' => ['class' => 'bg-blue-100 text-blue-800', 'label' => 'Moyenne'],
-            'high' => ['class' => 'bg-orange-100 text-orange-800', 'label' => 'Haute'],
-            'urgent' => ['class' => 'bg-red-100 text-red-800', 'label' => 'Urgente'],
+            'low' => ['class' => 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/20', 'label' => 'Basse'],
+            'medium' => ['class' => 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20', 'label' => 'Moyenne'],
+            'high' => ['class' => 'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20', 'label' => 'Haute'],
+            'urgent' => ['class' => 'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20', 'label' => 'Urgente'],
         ];
 
         $config = $priorityMap[strtolower($priority)] ?? ['class' => 'bg-gray-100 text-gray-800', 'label' => ucfirst($priority)];
