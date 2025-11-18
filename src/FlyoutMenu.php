@@ -18,33 +18,30 @@ class FlyoutMenu extends Component
     private static function getScript(): string
     {
         return '<script>
-            (function() {
-                if (window.flyoutMenuInitialized) return;
+            if (!window.flyoutMenuInitialized) {
                 window.flyoutMenuInitialized = true;
 
                 document.addEventListener("click", function(e) {
                     var flyouts = document.querySelectorAll("[data-flyout-menu]");
                     flyouts.forEach(function(flyout) {
-                        var button = flyout.querySelector("[data-flyout-trigger]");
                         var menu = flyout.querySelector("[data-flyout-content]");
                         if (menu && !flyout.contains(e.target)) {
                             menu.classList.add("hidden");
                         }
                     });
                 });
-            })();
 
-            function toggleFlyout(id) {
-                var menu = document.getElementById(id);
-                if (menu) {
-                    var wasHidden = menu.classList.contains("hidden");
-                    // Fermer tous les autres menus
-                    document.querySelectorAll("[data-flyout-content]").forEach(function(m) {
-                        if (m.id !== id) m.classList.add("hidden");
-                    });
-                    // Toggle ce menu
-                    menu.classList.toggle("hidden");
-                }
+                window.toggleFlyout = function(id) {
+                    var menu = document.getElementById(id);
+                    if (menu) {
+                        // Fermer tous les autres menus
+                        document.querySelectorAll("[data-flyout-content]").forEach(function(m) {
+                            if (m.id !== id) m.classList.add("hidden");
+                        });
+                        // Toggle ce menu
+                        menu.classList.toggle("hidden");
+                    }
+                };
             }
         </script>';
     }
