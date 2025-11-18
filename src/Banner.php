@@ -229,6 +229,7 @@ class Banner extends Component
             'success' => 'bg-emerald-50 text-emerald-800 border-emerald-200',
             'warning' => 'bg-amber-50 text-amber-800 border-amber-200',
             'danger' => 'bg-red-50 text-red-800 border-red-200',
+            'error' => 'bg-red-50 text-red-800 border-red-200',
         ];
 
         $icons = [
@@ -236,6 +237,7 @@ class Banner extends Component
             'success' => 'fas fa-check-circle text-emerald-500',
             'warning' => 'fas fa-exclamation-triangle text-amber-500',
             'danger' => 'fas fa-exclamation-circle text-red-500',
+            'error' => 'fas fa-exclamation-circle text-red-500',
         ];
 
         $colorClass = $colors[$type] ?? $colors['info'];
