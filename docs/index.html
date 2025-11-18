@@ -110,7 +110,7 @@
             <!-- Stats -->
             <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div class="text-center">
-                    <div class="text-4xl font-bold text-white">7</div>
+                    <div class="text-4xl font-bold text-white">11</div>
                     <div class="text-purple-200">Composants</div>
                 </div>
                 <div class="text-center">
@@ -204,6 +204,18 @@
                             </a>
                             <a href="#navigation-component" class="nav-link block px-3 py-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded">
                                 <i class="fas fa-compass w-5"></i> Navigation
+                            </a>
+                            <a href="#header-component" class="nav-link block px-3 py-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded">
+                                <i class="fas fa-heading w-5"></i> Header
+                            </a>
+                            <a href="#footer-component" class="nav-link block px-3 py-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded">
+                                <i class="fas fa-shoe-prints w-5"></i> Footer
+                            </a>
+                            <a href="#flyout-component" class="nav-link block px-3 py-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded">
+                                <i class="fas fa-bars w-5"></i> FlyoutMenu
+                            </a>
+                            <a href="#banner-component" class="nav-link block px-3 py-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded">
+                                <i class="fas fa-flag w-5"></i> Banner
                             </a>
                         </nav>
                     </div>
@@ -713,6 +725,324 @@ echo Navigation::dropdown('Mon compte', [
     'divider',
     ['label' => 'Déconnexion', 'url' => '/logout', 'icon' => 'fas fa-sign-out-alt']
 ]);
+?&gt;</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Header Component -->
+                    <div id="header-component" class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="bg-gray-800 text-white px-6 py-4">
+                            <h3 class="text-xl font-bold"><i class="fas fa-heading mr-2"></i> Header</h3>
+                            <p class="text-gray-400 text-sm">En-têtes et sections hero</p>
+                        </div>
+
+                        <!-- Preview -->
+                        <div class="component-preview p-6 border-b">
+                            <div class="bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 text-white py-12 rounded-lg">
+                                <div class="text-center px-4">
+                                    <h1 class="text-3xl font-bold mb-4">Titre Principal</h1>
+                                    <p class="text-blue-100 mb-6">Description de la section hero avec un texte explicatif.</p>
+                                    <button class="px-6 py-3 bg-white text-purple-600 font-semibold rounded-lg">Action</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Code -->
+                        <div class="relative">
+                            <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
+                                <i class="fas fa-copy"></i> Copier
+                            </button>
+                            <pre class="code-block"><code class="language-php">&lt;?php
+use TailwindUI\Header;
+
+// Hero simple
+echo Header::hero(
+    'Titre Principal',
+    'Description de la section',
+    Button::primary('Commencer')
+);
+
+// Hero avec image de fond
+echo Header::heroWithBackground(
+    'Titre',
+    'Description',
+    '/images/background.jpg',
+    Button::primary('Action')
+);
+
+// Hero avec deux colonnes
+echo Header::heroSplit(
+    'Titre',
+    'Description',
+    '/images/hero-image.jpg',
+    Button::primary('Action')
+);
+
+// En-tête de page
+echo Header::page('Titre de la page', 'Description optionnelle');
+
+// En-tête avec breadcrumb
+echo Header::pageWithBreadcrumb('Mon Projet', [
+    ['label' => 'Accueil', 'url' => '/'],
+    ['label' => 'Projets', 'url' => '/projects'],
+    ['label' => 'Mon Projet', 'url' => '']
+]);
+
+// Section centrée avec statistiques
+echo Header::centered('Nos Résultats', 'Description', [
+    ['value' => '100+', 'label' => 'Clients'],
+    ['value' => '50K', 'label' => 'Projets']
+]);
+
+// Hero avec dégradé personnalisé
+echo Header::gradient('Titre', 'Description', 'green-500', 'teal-600');
+
+// En-tête de section
+echo Header::section('Titre de Section', 'Description');
+?&gt;</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Footer Component -->
+                    <div id="footer-component" class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="bg-gray-800 text-white px-6 py-4">
+                            <h3 class="text-xl font-bold"><i class="fas fa-shoe-prints mr-2"></i> Footer</h3>
+                            <p class="text-gray-400 text-sm">Pieds de page stylisés</p>
+                        </div>
+
+                        <!-- Preview -->
+                        <div class="component-preview p-6 border-b">
+                            <div class="bg-gray-900 text-white py-8 rounded-lg">
+                                <div class="text-center px-4">
+                                    <div class="flex justify-center space-x-6 mb-4">
+                                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter text-xl"></i></a>
+                                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-github text-xl"></i></a>
+                                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin text-xl"></i></a>
+                                    </div>
+                                    <p class="text-gray-400 text-sm">© 2024 Mon Site. Tous droits réservés.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Code -->
+                        <div class="relative">
+                            <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
+                                <i class="fas fa-copy"></i> Copier
+                            </button>
+                            <pre class="code-block"><code class="language-php">&lt;?php
+use TailwindUI\Footer;
+
+// Footer simple
+echo Footer::simple('© 2024 Mon Site');
+
+// Footer avec réseaux sociaux
+echo Footer::withSocial('© 2024 Mon Site', [
+    ['url' => 'https://twitter.com', 'icon' => 'fab fa-twitter', 'label' => 'Twitter'],
+    ['url' => 'https://github.com', 'icon' => 'fab fa-github', 'label' => 'GitHub']
+]);
+
+// Footer avec colonnes
+echo Footer::withColumns([
+    [
+        'title' => 'Produits',
+        'links' => [
+            ['label' => 'Features', 'url' => '/features'],
+            ['label' => 'Pricing', 'url' => '/pricing']
+        ]
+    ],
+    [
+        'title' => 'Support',
+        'links' => [
+            ['label' => 'Documentation', 'url' => '/docs'],
+            ['label' => 'Contact', 'url' => '/contact']
+        ]
+    ]
+], '© 2024 Mon Site');
+
+// Footer avec newsletter
+echo Footer::withNewsletter(
+    'Restez informé',
+    'Recevez nos dernières actualités',
+    '/newsletter',
+    '© 2024 Mon Site'
+);
+
+// Footer complet
+echo Footer::full('MonLogo', $columns, $socialLinks, '© 2024 Mon Site');
+
+// Footer clair
+echo Footer::light('© 2024 Mon Site', [
+    ['label' => 'Conditions', 'url' => '/terms'],
+    ['label' => 'Confidentialité', 'url' => '/privacy']
+]);
+?&gt;</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- FlyoutMenu Component -->
+                    <div id="flyout-component" class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="bg-gray-800 text-white px-6 py-4">
+                            <h3 class="text-xl font-bold"><i class="fas fa-bars mr-2"></i> FlyoutMenu</h3>
+                            <p class="text-gray-400 text-sm">Menus déroulants avancés</p>
+                        </div>
+
+                        <!-- Preview -->
+                        <div class="component-preview p-6 border-b">
+                            <div class="relative inline-block">
+                                <button class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 bg-white rounded-lg shadow">
+                                    Produits
+                                    <i class="fas fa-chevron-down ml-2 text-xs text-gray-400"></i>
+                                </button>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-4">Cliquez pour voir le menu déroulant (fonctionnalité JavaScript)</p>
+                        </div>
+
+                        <!-- Code -->
+                        <div class="relative">
+                            <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
+                                <i class="fas fa-copy"></i> Copier
+                            </button>
+                            <pre class="code-block"><code class="language-php">&lt;?php
+use TailwindUI\FlyoutMenu;
+
+// Menu simple
+echo FlyoutMenu::simple('Produits', [
+    ['label' => 'Analytics', 'url' => '/analytics', 'icon' => 'fas fa-chart-bar'],
+    ['label' => 'Engagement', 'url' => '/engagement', 'icon' => 'fas fa-cursor'],
+    'divider',
+    ['label' => 'Sécurité', 'url' => '/security', 'icon' => 'fas fa-shield-alt']
+]);
+
+// Menu avec descriptions
+echo FlyoutMenu::withDescriptions('Solutions', [
+    [
+        'label' => 'Analytics',
+        'description' => 'Analysez vos données en profondeur',
+        'url' => '/analytics',
+        'icon' => 'fas fa-chart-pie'
+    ],
+    [
+        'label' => 'Automatisation',
+        'description' => 'Automatisez vos workflows',
+        'url' => '/automation',
+        'icon' => 'fas fa-robot'
+    ]
+]);
+
+// Mega menu
+echo FlyoutMenu::mega('Solutions', [
+    [
+        'title' => 'Analytics',
+        'items' => [
+            ['label' => 'Rapports', 'url' => '/reports', 'icon' => 'fas fa-file-alt'],
+            ['label' => 'Dashboards', 'url' => '/dashboards', 'icon' => 'fas fa-tachometer-alt']
+        ]
+    ]
+], [
+    'title' => 'Featured',
+    'items' => [
+        ['label' => 'Guide', 'url' => '/guide', 'description' => 'Commencez ici']
+    ]
+]);
+
+// Grille d'icônes
+echo FlyoutMenu::iconGrid('Apps', [
+    ['label' => 'Calendar', 'url' => '/calendar', 'icon' => 'fas fa-calendar'],
+    ['label' => 'Mail', 'url' => '/mail', 'icon' => 'fas fa-envelope']
+], 3);
+
+// Menu avec footer
+echo FlyoutMenu::withFooter('Ressources', $items, [
+    ['label' => 'Voir tout', 'url' => '/resources']
+]);
+?&gt;</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Banner Component -->
+                    <div id="banner-component" class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="bg-gray-800 text-white px-6 py-4">
+                            <h3 class="text-xl font-bold"><i class="fas fa-flag mr-2"></i> Banner</h3>
+                            <p class="text-gray-400 text-sm">Bannières et notifications</p>
+                        </div>
+
+                        <!-- Preview -->
+                        <div class="component-preview p-6 border-b">
+                            <div class="space-y-4">
+                                <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-3 rounded-lg">
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-sm font-medium">Nouvelle fonctionnalité disponible !</p>
+                                        <button class="text-white/80 hover:text-white">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-exclamation-triangle mr-3"></i>
+                                        <p class="text-sm">Attention : Maintenance prévue ce soir.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Code -->
+                        <div class="relative">
+                            <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
+                                <i class="fas fa-copy"></i> Copier
+                            </button>
+                            <pre class="code-block"><code class="language-php">&lt;?php
+use TailwindUI\Banner;
+
+// Bannière d'annonce
+echo Banner::announcement(
+    'Nouvelle version disponible !',
+    '/changelog',
+    true // dismissible
+);
+
+// Bannière promotionnelle
+echo Banner::promo(
+    'Soldes d\'été',
+    'Profitez de -30% sur tout le site',
+    'Voir les offres',
+    '/promo'
+);
+
+// Bannière cookie
+echo Banner::cookie(
+    'Nous utilisons des cookies pour améliorer votre expérience.',
+    'Accepter',
+    'Refuser'
+);
+
+// Bannière compte à rebours
+echo Banner::countdown(
+    'Offre limitée !',
+    '2024-12-31 23:59:59',
+    'Profiter',
+    '/offer'
+);
+
+// Bannière d'alerte
+echo Banner::alert('warning', 'Maintenance prévue ce soir', '/status');
+echo Banner::alert('error', 'Service temporairement indisponible');
+echo Banner::alert('success', 'Mise à jour effectuée');
+echo Banner::alert('info', 'Nouvelle fonctionnalité disponible');
+
+// Bannière flottante
+echo Banner::floating(
+    'Besoin d\'aide ?',
+    'Contactez-nous',
+    '/contact'
+);
+
+// Bannière avec icône
+echo Banner::withIcon(
+    'fas fa-gift',
+    'Cadeau de bienvenue pour les nouveaux inscrits !',
+    'purple'
+);
 ?&gt;</code></pre>
                         </div>
                     </div>
