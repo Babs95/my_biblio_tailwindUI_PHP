@@ -10,7 +10,27 @@
     <style>
         .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .code-block { max-height: 500px; overflow-y: auto; }
-        .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; }
+        .copy-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: all 0.2s ease-out;
+        }
+        .relative:hover .copy-btn,
+        .copy-btn:focus {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .copy-btn.copied {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            animation: copyPulse 0.3s ease-out;
+        }
+        @keyframes copyPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -95,7 +115,7 @@
                     </p>
 
                     <div class="relative mt-2">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto"><code>git clone https://github.com/Babs95/my_biblio_tailwindUI_PHP.git
@@ -143,7 +163,7 @@ cd my_biblio_tailwindUI_PHP/src</code></pre>
                     </p>
 
                     <div class="relative">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="code-block"><code class="language-json">{
@@ -183,7 +203,7 @@ cd my_biblio_tailwindUI_PHP/src</code></pre>
                     </p>
 
                     <div class="relative">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="code-block"><code class="language-html">&lt;!DOCTYPE html&gt;
@@ -220,7 +240,7 @@ cd my_biblio_tailwindUI_PHP/src</code></pre>
                 </div>
                 <div class="p-6">
                     <div class="relative">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto"><code>composer require tailwindui/php</code></pre>
@@ -252,7 +272,7 @@ cd my_biblio_tailwindUI_PHP/src</code></pre>
                 </div>
                 <div class="p-6">
                     <div class="relative">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="code-block"><code class="language-php">&lt;?php
@@ -333,7 +353,7 @@ use TailwindUI\Navigation;
                     </p>
 
                     <div class="relative">
-                        <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                        <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                             <i class="fas fa-copy"></i>
                         </button>
                         <pre class="code-block"><code class="language-php">&lt;?php
@@ -413,10 +433,31 @@ spl_autoload_register(function (string $className): void {
         function copyCode(button) {
             const codeBlock = button.parentElement.querySelector('code');
             const text = codeBlock.textContent;
+
             navigator.clipboard.writeText(text).then(() => {
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-check"></i> Copié !';
-                setTimeout(() => { button.innerHTML = originalText; }, 2000);
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check mr-1.5"></i>Copié';
+                button.classList.add('copied');
+
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(() => {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check mr-1.5"></i>Copié';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.classList.remove('copied');
+                }, 2000);
             });
         }
     </script>

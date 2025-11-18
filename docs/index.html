@@ -26,8 +26,26 @@
         }
         .copy-btn {
             position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
+            top: 0.75rem;
+            right: 0.75rem;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: all 0.2s ease-out;
+        }
+        .relative:hover .copy-btn,
+        .copy-btn:focus {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .copy-btn.copied {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        }
+        @keyframes copyPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .copy-btn.copied {
+            animation: copyPulse 0.3s ease-out;
         }
         .component-preview {
             background: repeating-linear-gradient(
@@ -221,7 +239,7 @@
 
                         <!-- Code -->
                         <div class="relative">
-                            <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                                 <i class="fas fa-copy"></i> Copier
                             </button>
                             <pre class="code-block"><code class="language-php">&lt;?php
@@ -294,7 +312,7 @@ echo Button::primary('Submit', [
 
                         <!-- Code -->
                         <div class="relative">
-                            <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                                 <i class="fas fa-copy"></i> Copier
                             </button>
                             <pre class="code-block"><code class="language-php">&lt;?php
@@ -362,7 +380,7 @@ echo Card::empty(
 
                         <!-- Code -->
                         <div class="relative">
-                            <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                                 <i class="fas fa-copy"></i> Copier
                             </button>
                             <pre class="code-block"><code class="language-php">&lt;?php
@@ -441,7 +459,7 @@ echo Form::grid([
 
                         <!-- Code -->
                         <div class="relative">
-                            <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                                 <i class="fas fa-copy"></i> Copier
                             </button>
                             <pre class="code-block"><code class="language-php">&lt;?php
@@ -496,7 +514,7 @@ echo Alert::toast('Enregistré !', 'success', 3000);
 
                         <!-- Code -->
                         <div class="relative">
-                            <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                                 <i class="fas fa-copy"></i> Copier
                             </button>
                             <pre class="code-block"><code class="language-php">&lt;?php
@@ -571,7 +589,7 @@ echo Badge::group([
 
                         <!-- Code -->
                         <div class="relative">
-                            <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                                 <i class="fas fa-copy"></i> Copier
                             </button>
                             <pre class="code-block"><code class="language-php">&lt;?php
@@ -646,7 +664,7 @@ echo Table::pagination($currentPage, $totalPages, '/tasks');
 
                         <!-- Code -->
                         <div class="relative">
-                            <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                            <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                                 <i class="fas fa-copy"></i> Copier
                             </button>
                             <pre class="code-block"><code class="language-php">&lt;?php
@@ -796,7 +814,7 @@ echo Navigation::dropdown('Mon compte', [
                     <h3 class="text-lg font-bold">Exemple Rapide</h3>
                 </div>
                 <div class="relative">
-                    <button onclick="copyCode(this)" class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-sm hover:bg-gray-600">
+                    <button onclick="copyCode(this)" class="copy-btn bg-gray-800/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-lg">
                         <i class="fas fa-copy"></i> Copier
                     </button>
                     <pre class="code-block"><code class="language-php">&lt;?php
@@ -887,13 +905,29 @@ use TailwindUI\Table;
             const text = codeBlock.textContent;
 
             navigator.clipboard.writeText(text).then(() => {
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-check"></i> Copié !';
-                button.classList.add('bg-green-600');
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check mr-1.5"></i>Copié';
+                button.classList.add('copied');
 
                 setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.classList.remove('bg-green-600');
+                    button.innerHTML = originalHTML;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check mr-1.5"></i>Copié';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.classList.remove('copied');
                 }, 2000);
             });
         }
