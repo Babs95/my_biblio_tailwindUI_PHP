@@ -1,5 +1,5 @@
 {
-    "name": "taskcollab/tailwindui-php",
+    "name": "tailwindui/php",
     "description": "Bibliothèque de composants UI réutilisables pour PHP avec Tailwind CSS - Buttons, Cards, Forms, Alerts, Badges, Tables, Navigation",
     "keywords": [
         "tailwindcss",

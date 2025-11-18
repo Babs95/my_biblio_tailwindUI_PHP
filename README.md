@@ -36,7 +36,7 @@
 ### Via Composer (Recommandé)
 
 ```bash
-composer require taskcollab/tailwindui-php
+composer require tailwindui/php
 ```
 
 ### Installation Manuelle

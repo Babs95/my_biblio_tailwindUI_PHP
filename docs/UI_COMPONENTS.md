@@ -1,6 +1,6 @@
 # Bibliothèque de Composants UI Tailwind CSS
 
-Documentation complète de la bibliothèque de composants réutilisables TaskCollab.
+Documentation complète de la bibliothèque de composants UI réutilisables pour PHP avec Tailwind CSS.
 
 ## 📚 Table des Matières
 
@@ -596,7 +596,7 @@ Composant pour créer des éléments de navigation.
 
 ```php
 $brand = '<a href="/" class="text-2xl font-bold text-blue-600">
-    <i class="fas fa-tasks"></i> TaskCollab
+    <i class="fas fa-cube"></i> TailwindUI PHP
 </a>';
 
 $links = [
@@ -696,7 +696,7 @@ echo Navigation::dropdown('Mon compte', $dropdownItems);
 <!-- Layout avec navigation complète -->
 <?php
 $brand = '<a href="' . APP_URL . '/" class="text-2xl font-bold text-blue-600">
-    <i class="fas fa-tasks"></i> TaskCollab
+    <i class="fas fa-cube"></i> TailwindUI PHP
 </a>';
 
 $links = [
@@ -860,7 +860,7 @@ module.exports = {
 
 ## Support et Contribution
 
-Pour toute question ou suggestion d'amélioration, veuillez contacter l'équipe de développement TaskCollab.
+Pour toute question ou suggestion d'amélioration, veuillez consulter la documentation ou contacter l'équipe pédagogique.
 
 **Projet pédagogique IAGE Formation L2**
 
