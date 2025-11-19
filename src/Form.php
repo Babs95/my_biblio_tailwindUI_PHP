@@ -15,12 +15,12 @@ class Form extends Component
     /**
      * Classes de base pour les inputs
      */
-    private const INPUT_BASE = 'w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 hover:border-gray-300';
+    private const INPUT_BASE = 'w-full px-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-400 transition-all duration-300 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:shadow-lg focus:shadow-blue-500/5 hover:border-gray-300 hover:bg-gray-50';
 
     /**
      * Classes de base pour les labels
      */
-    private const LABEL_BASE = 'block text-sm font-semibold text-gray-700 mb-2';
+    private const LABEL_BASE = 'block text-sm font-semibold text-gray-700 mb-2.5';
 
     /**
      * Input text/email/password/number/etc.
@@ -199,7 +199,7 @@ class Form extends Component
             'type' => 'checkbox',
             'id' => $name,
             'name' => $name,
-            'class' => 'h-5 w-5 text-blue-600 focus:ring-blue-500/20 border-gray-300 rounded-md transition-colors',
+            'class' => 'h-5 w-5 text-blue-600 focus:ring-4 focus:ring-blue-500/20 border-gray-300 rounded-lg transition-all duration-200 cursor-pointer',
             'checked' => $checked,
         ], $attributes);
 
@@ -231,7 +231,7 @@ class Form extends Component
             'id' => $name . '_' . $value,
             'name' => $name,
             'value' => $value,
-            'class' => 'h-5 w-5 text-blue-600 focus:ring-blue-500/20 border-gray-300 transition-colors',
+            'class' => 'h-5 w-5 text-blue-600 focus:ring-4 focus:ring-blue-500/20 border-gray-300 transition-all duration-200 cursor-pointer',
             'checked' => $checked,
         ], $attributes);
 

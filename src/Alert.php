@@ -18,7 +18,7 @@ class Alert extends Component
     /**
      * Classes de base pour toutes les alertes
      */
-    private const BASE_CLASSES = 'px-4 py-4 rounded-xl relative mb-4 backdrop-blur-sm';
+    private const BASE_CLASSES = 'px-5 py-4 rounded-2xl relative mb-4 backdrop-blur-sm shadow-sm';
 
     /**
      * Script pour la gestion des alertes avec event delegation
@@ -137,10 +137,10 @@ class Alert extends Component
     private static function getTypeColors(string $type): string
     {
         $colors = [
-            'success' => 'bg-emerald-50 border border-emerald-200 text-emerald-800',
-            'error' => 'bg-red-50 border border-red-200 text-red-800',
-            'warning' => 'bg-amber-50 border border-amber-200 text-amber-800',
-            'info' => 'bg-blue-50 border border-blue-200 text-blue-800',
+            'success' => 'bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200/60 text-emerald-800 shadow-emerald-100/50',
+            'error' => 'bg-gradient-to-r from-red-50 to-rose-50 border border-red-200/60 text-red-800 shadow-red-100/50',
+            'warning' => 'bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/60 text-amber-800 shadow-amber-100/50',
+            'info' => 'bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200/60 text-blue-800 shadow-blue-100/50',
         ];
 
         return $colors[$type] ?? $colors['info'];
