@@ -23,11 +23,14 @@ if (!window.flyoutMenuInitialized) {
 
     // Fermer au clic en dehors
     document.addEventListener("click", function(e) {
-        document.querySelectorAll("[data-flyout-menu]").forEach(function(flyout) {
-            var menu = flyout.querySelector("[data-flyout-content]");
-            if (menu && !flyout.contains(e.target)) {
-                menu.classList.add("hidden");
-            }
+        // Ignorer si le clic est sur un bouton trigger
+        if (e.target.closest("[data-flyout-trigger]")) {
+            return;
+        }
+
+        // Fermer tous les menus si clic en dehors
+        document.querySelectorAll("[data-flyout-content]").forEach(function(menu) {
+            menu.classList.add("hidden");
         });
     });
 
