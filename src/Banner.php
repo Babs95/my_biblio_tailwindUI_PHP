@@ -14,11 +14,12 @@ class Banner extends Component
 {
     /**
      * Barre d'annonce simple
+     * @param int|null $autoDismiss Temps en ms avant fermeture automatique (null = désactivé)
      */
-    public static function announcement(string $message, ?string $url = null, bool $dismissible = true, array $attributes = []): string
+    public static function announcement(string $message, ?string $url = null, bool $dismissible = true, array $attributes = [], ?int $autoDismiss = null): string
     {
         $classes = self::classNames([
-            'bg-blue-600 text-white',
+            'bg-blue-600 text-white transition-all duration-300',
             $attributes['class'] ?? '',
         ]);
 
@@ -26,7 +27,12 @@ class Banner extends Component
 
         $id = 'banner-' . uniqid();
 
-        $html = '<div id="' . $id . '" class="' . $classes . '" ' . self::attributes($attributes) . '>';
+        $html = '<div id="' . $id . '" class="' . $classes . '" role="banner" ' . self::attributes($attributes) . '>';
+
+        // Auto-dismiss script
+        if ($autoDismiss) {
+            $html .= '<script>setTimeout(function() { var el = document.getElementById("' . $id . '"); if (el) { el.style.opacity = "0"; el.style.transform = "translateY(-100%)"; setTimeout(function() { el.remove(); }, 300); } }, ' . $autoDismiss . ');</script>';
+        }
         $html .= '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">';
         $html .= '<div class="flex items-center justify-between flex-wrap gap-2">';
 
@@ -46,8 +52,8 @@ class Banner extends Component
         $html .= '</div>';
 
         if ($dismissible) {
-            $html .= '<button type="button" class="flex-shrink-0 p-1 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-white transition-colors" onclick="document.getElementById(\'' . $id . '\').remove()">';
-            $html .= '<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">';
+            $html .= '<button type="button" aria-label="Fermer" class="flex-shrink-0 p-1 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-white transition-colors" onclick="document.getElementById(\'' . $id . '\').remove()">';
+            $html .= '<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">';
             $html .= '<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>';
             $html .= '</svg>';
             $html .= '</button>';
@@ -62,11 +68,12 @@ class Banner extends Component
 
     /**
      * Bannière promotionnelle
+     * @param int|null $autoDismiss Temps en ms avant fermeture automatique (null = désactivé)
      */
-    public static function promo(string $title, string $description, ?string $ctaText = null, ?string $ctaUrl = null, bool $dismissible = true, array $attributes = []): string
+    public static function promo(string $title, string $description, ?string $ctaText = null, ?string $ctaUrl = null, bool $dismissible = true, array $attributes = [], ?int $autoDismiss = null): string
     {
         $classes = self::classNames([
-            'bg-gradient-to-r from-purple-600 to-blue-600 text-white',
+            'bg-gradient-to-r from-purple-600 to-blue-600 text-white transition-all duration-300',
             $attributes['class'] ?? '',
         ]);
 
@@ -74,7 +81,11 @@ class Banner extends Component
 
         $id = 'promo-' . uniqid();
 
-        $html = '<div id="' . $id . '" class="' . $classes . '" ' . self::attributes($attributes) . '>';
+        $html = '<div id="' . $id . '" class="' . $classes . '" role="banner" ' . self::attributes($attributes) . '>';
+
+        if ($autoDismiss) {
+            $html .= '<script>setTimeout(function() { var el = document.getElementById("' . $id . '"); if (el) { el.style.opacity = "0"; el.style.transform = "translateY(-100%)"; setTimeout(function() { el.remove(); }, 300); } }, ' . $autoDismiss . ');</script>';
+        }
         $html .= '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">';
         $html .= '<div class="flex items-center justify-between flex-wrap gap-4">';
 
@@ -95,8 +106,8 @@ class Banner extends Component
 
         // Dismiss button
         if ($dismissible) {
-            $html .= '<button type="button" class="flex-shrink-0 p-1 rounded-lg hover:bg-white/10 focus:outline-none transition-colors" onclick="document.getElementById(\'' . $id . '\').remove()">';
-            $html .= '<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">';
+            $html .= '<button type="button" aria-label="Fermer" class="flex-shrink-0 p-1 rounded-lg hover:bg-white/10 focus:outline-none transition-colors" onclick="document.getElementById(\'' . $id . '\').remove()">';
+            $html .= '<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">';
             $html .= '<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>';
             $html .= '</svg>';
             $html .= '</button>';
@@ -229,6 +240,7 @@ class Banner extends Component
             'success' => 'bg-emerald-50 text-emerald-800 border-emerald-200',
             'warning' => 'bg-amber-50 text-amber-800 border-amber-200',
             'danger' => 'bg-red-50 text-red-800 border-red-200',
+            'error' => 'bg-red-50 text-red-800 border-red-200',
         ];
 
         $icons = [
@@ -236,6 +248,7 @@ class Banner extends Component
             'success' => 'fas fa-check-circle text-emerald-500',
             'warning' => 'fas fa-exclamation-triangle text-amber-500',
             'danger' => 'fas fa-exclamation-circle text-red-500',
+            'error' => 'fas fa-exclamation-circle text-red-500',
         ];
 
         $colorClass = $colors[$type] ?? $colors['info'];

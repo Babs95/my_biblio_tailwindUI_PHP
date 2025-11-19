@@ -18,32 +18,44 @@ class FlyoutMenu extends Component
     private static function getScript(): string
     {
         return '<script>
-            if (!window.flyoutMenuInitialized) {
-                window.flyoutMenuInitialized = true;
+if (!window.flyoutMenuInitialized) {
+    window.flyoutMenuInitialized = true;
 
-                document.addEventListener("click", function(e) {
-                    var flyouts = document.querySelectorAll("[data-flyout-menu]");
-                    flyouts.forEach(function(flyout) {
-                        var menu = flyout.querySelector("[data-flyout-content]");
-                        if (menu && !flyout.contains(e.target)) {
-                            menu.classList.add("hidden");
-                        }
-                    });
-                });
-
-                window.toggleFlyout = function(id) {
-                    var menu = document.getElementById(id);
-                    if (menu) {
-                        // Fermer tous les autres menus
-                        document.querySelectorAll("[data-flyout-content]").forEach(function(m) {
-                            if (m.id !== id) m.classList.add("hidden");
-                        });
-                        // Toggle ce menu
-                        menu.classList.toggle("hidden");
-                    }
-                };
+    // Fermer au clic en dehors
+    document.addEventListener("click", function(e) {
+        document.querySelectorAll("[data-flyout-menu]").forEach(function(flyout) {
+            var menu = flyout.querySelector("[data-flyout-content]");
+            if (menu && !flyout.contains(e.target)) {
+                menu.classList.add("hidden");
             }
-        </script>';
+        });
+    });
+
+    // Fermer avec Escape
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") {
+            document.querySelectorAll("[data-flyout-content]").forEach(function(menu) {
+                menu.classList.add("hidden");
+            });
+        }
+    });
+}
+
+function toggleFlyout(id) {
+    var menu = document.getElementById(id);
+    if (!menu) return;
+
+    // Fermer tous les autres menus
+    document.querySelectorAll("[data-flyout-content]").forEach(function(m) {
+        if (m.id !== id) {
+            m.classList.add("hidden");
+        }
+    });
+
+    // Toggle ce menu
+    menu.classList.toggle("hidden");
+}
+</script>';
     }
 
     /**
