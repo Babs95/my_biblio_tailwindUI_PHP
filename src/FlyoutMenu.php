@@ -18,62 +18,44 @@ class FlyoutMenu extends Component
     private static function getScript(): string
     {
         return '<script>
-            if (!window.flyoutMenuInitialized) {
-                window.flyoutMenuInitialized = true;
+if (!window.flyoutMenuInitialized) {
+    window.flyoutMenuInitialized = true;
 
-                // Fermer au clic en dehors
-                document.addEventListener("click", function(e) {
-                    var flyouts = document.querySelectorAll("[data-flyout-menu]");
-                    flyouts.forEach(function(flyout) {
-                        var menu = flyout.querySelector("[data-flyout-content]");
-                        if (menu && !flyout.contains(e.target)) {
-                            menu.classList.add("opacity-0", "scale-95");
-                            setTimeout(function() { menu.classList.add("hidden"); }, 100);
-                        }
-                    });
-                });
-
-                // Fermer avec Escape
-                document.addEventListener("keydown", function(e) {
-                    if (e.key === "Escape") {
-                        document.querySelectorAll("[data-flyout-content]").forEach(function(menu) {
-                            if (!menu.classList.contains("hidden")) {
-                                menu.classList.add("opacity-0", "scale-95");
-                                setTimeout(function() { menu.classList.add("hidden"); }, 100);
-                            }
-                        });
-                    }
-                });
-
-                window.toggleFlyout = function(id) {
-                    var menu = document.getElementById(id);
-                    if (menu) {
-                        var isHidden = menu.classList.contains("hidden");
-
-                        // Fermer tous les autres menus
-                        document.querySelectorAll("[data-flyout-content]").forEach(function(m) {
-                            if (m.id !== id && !m.classList.contains("hidden")) {
-                                m.classList.add("opacity-0", "scale-95");
-                                setTimeout(function() { m.classList.add("hidden"); }, 100);
-                            }
-                        });
-
-                        // Toggle ce menu avec animation
-                        if (isHidden) {
-                            menu.classList.remove("hidden");
-                            setTimeout(function() {
-                                menu.classList.remove("opacity-0", "scale-95");
-                                menu.classList.add("opacity-100", "scale-100");
-                            }, 10);
-                        } else {
-                            menu.classList.add("opacity-0", "scale-95");
-                            menu.classList.remove("opacity-100", "scale-100");
-                            setTimeout(function() { menu.classList.add("hidden"); }, 100);
-                        }
-                    }
-                };
+    // Fermer au clic en dehors
+    document.addEventListener("click", function(e) {
+        document.querySelectorAll("[data-flyout-menu]").forEach(function(flyout) {
+            var menu = flyout.querySelector("[data-flyout-content]");
+            if (menu && !flyout.contains(e.target)) {
+                menu.classList.add("hidden");
             }
-        </script>';
+        });
+    });
+
+    // Fermer avec Escape
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") {
+            document.querySelectorAll("[data-flyout-content]").forEach(function(menu) {
+                menu.classList.add("hidden");
+            });
+        }
+    });
+}
+
+function toggleFlyout(id) {
+    var menu = document.getElementById(id);
+    if (!menu) return;
+
+    // Fermer tous les autres menus
+    document.querySelectorAll("[data-flyout-content]").forEach(function(m) {
+        if (m.id !== id) {
+            m.classList.add("hidden");
+        }
+    });
+
+    // Toggle ce menu
+    menu.classList.toggle("hidden");
+}
+</script>';
     }
 
     /**
@@ -100,7 +82,7 @@ class FlyoutMenu extends Component
         $html .= '</button>';
 
         // Dropdown panel
-        $html .= '<div id="' . $id . '" data-flyout-content class="hidden opacity-0 scale-95 transform transition duration-100 ease-out absolute left-0 z-50 mt-2 w-56 origin-top-left rounded-xl bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">';
+        $html .= '<div id="' . $id . '" data-flyout-content class="hidden absolute left-0 z-50 mt-2 w-56 origin-top-left rounded-xl bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">';
         $html .= '<div class="py-2">';
 
         foreach ($items as $item) {
@@ -148,7 +130,7 @@ class FlyoutMenu extends Component
         $html .= '</button>';
 
         // Dropdown panel
-        $html .= '<div id="' . $id . '" data-flyout-content class="hidden opacity-0 scale-95 transform transition duration-100 ease-out absolute left-0 z-50 mt-3 w-80 origin-top-left">';
+        $html .= '<div id="' . $id . '" data-flyout-content class="hidden absolute left-0 z-50 mt-3 w-80 origin-top-left">';
         $html .= '<div class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 overflow-hidden">';
         $html .= '<div class="p-4 space-y-1">';
 
@@ -204,7 +186,7 @@ class FlyoutMenu extends Component
         $html .= '</button>';
 
         // Mega menu panel
-        $html .= '<div id="' . $id . '" data-flyout-content class="hidden opacity-0 scale-95 transition duration-100 ease-out absolute left-1/2 z-50 mt-3 w-screen max-w-4xl -translate-x-1/2 transform">';
+        $html .= '<div id="' . $id . '" data-flyout-content class="hidden absolute left-1/2 z-50 mt-3 w-screen max-w-4xl -translate-x-1/2 transform">';
         $html .= '<div class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 overflow-hidden">';
 
         $html .= '<div class="grid grid-cols-1 lg:grid-cols-' . (count($sections) + ($featured ? 1 : 0)) . ' divide-x divide-gray-100">';
@@ -294,7 +276,7 @@ class FlyoutMenu extends Component
         // Grid panel
         $width = $cols === 2 ? 'w-64' : ($cols === 3 ? 'w-80' : 'w-96');
 
-        $html .= '<div id="' . $id . '" data-flyout-content class="hidden opacity-0 scale-95 transform transition duration-100 ease-out absolute left-0 z-50 mt-3 ' . $width . ' origin-top-left">';
+        $html .= '<div id="' . $id . '" data-flyout-content class="hidden absolute left-0 z-50 mt-3 ' . $width . ' origin-top-left">';
         $html .= '<div class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 p-4">';
         $html .= '<div class="grid grid-cols-' . $cols . ' gap-2">';
 
@@ -340,7 +322,7 @@ class FlyoutMenu extends Component
         $html .= '</button>';
 
         // Dropdown panel
-        $html .= '<div id="' . $id . '" data-flyout-content class="hidden opacity-0 scale-95 transform transition duration-100 ease-out absolute left-0 z-50 mt-3 w-72 origin-top-left">';
+        $html .= '<div id="' . $id . '" data-flyout-content class="hidden absolute left-0 z-50 mt-3 w-72 origin-top-left">';
         $html .= '<div class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 overflow-hidden">';
 
         // Items
