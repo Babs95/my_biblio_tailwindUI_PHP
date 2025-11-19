@@ -31,6 +31,20 @@ class FlyoutMenu extends Component
     if (window.flyoutMenuInitialized) return;
     window.flyoutMenuInitialized = true;
 
+    function closeMenu(menu) {
+        menu.style.opacity = "0";
+        menu.style.transform = "translateY(-8px) scale(0.95)";
+        setTimeout(function() { menu.classList.add("hidden"); }, 200);
+    }
+
+    function openMenu(menu) {
+        menu.classList.remove("hidden");
+        setTimeout(function() {
+            menu.style.opacity = "1";
+            menu.style.transform = "translateY(0) scale(1)";
+        }, 10);
+    }
+
     document.addEventListener("click", function(e) {
         var trigger = e.target.closest("[data-flyout-trigger]");
 
@@ -44,17 +58,17 @@ class FlyoutMenu extends Component
             if (menu) {
                 var isHidden = menu.classList.contains("hidden");
 
-                // Fermer tous les menus et mettre à jour aria-expanded
+                // Fermer tous les menus
                 document.querySelectorAll("[data-flyout-content]").forEach(function(m) {
-                    m.classList.add("hidden");
+                    if (!m.classList.contains("hidden")) closeMenu(m);
                 });
                 document.querySelectorAll("[data-flyout-trigger]").forEach(function(t) {
                     t.setAttribute("aria-expanded", "false");
                 });
 
-                // Toggle ce menu
+                // Ouvrir ce menu
                 if (isHidden) {
-                    menu.classList.remove("hidden");
+                    openMenu(menu);
                     trigger.setAttribute("aria-expanded", "true");
                 }
             }
@@ -62,7 +76,7 @@ class FlyoutMenu extends Component
             // Clic en dehors - fermer tous les menus
             if (!e.target.closest("[data-flyout-content]")) {
                 document.querySelectorAll("[data-flyout-content]").forEach(function(menu) {
-                    menu.classList.add("hidden");
+                    if (!menu.classList.contains("hidden")) closeMenu(menu);
                 });
                 document.querySelectorAll("[data-flyout-trigger]").forEach(function(t) {
                     t.setAttribute("aria-expanded", "false");
@@ -74,7 +88,7 @@ class FlyoutMenu extends Component
     document.addEventListener("keydown", function(e) {
         if (e.key === "Escape") {
             document.querySelectorAll("[data-flyout-content]").forEach(function(menu) {
-                menu.classList.add("hidden");
+                if (!menu.classList.contains("hidden")) closeMenu(menu);
             });
             document.querySelectorAll("[data-flyout-trigger]").forEach(function(t) {
                 t.setAttribute("aria-expanded", "false");
@@ -119,7 +133,7 @@ class FlyoutMenu extends Component
         $html .= self::getTriggerButton($trigger, $id);
 
         // Dropdown panel
-        $html .= '<div id="' . $id . '" data-flyout-content role="menu" aria-orientation="vertical" class="hidden absolute left-0 z-50 mt-2 w-56 origin-top-left rounded-xl bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">';
+        $html .= '<div id="' . $id . '" data-flyout-content role="menu" aria-orientation="vertical" class="hidden absolute left-0 z-50 mt-3 w-56 origin-top-left rounded-2xl bg-white shadow-xl shadow-gray-200/50 ring-1 ring-black/5 focus:outline-none transition-all duration-200" style="opacity: 0; transform: translateY(-8px) scale(0.95);">';
         $html .= '<div class="py-2">';
 
         foreach ($items as $item) {
@@ -162,7 +176,7 @@ class FlyoutMenu extends Component
         $html .= self::getTriggerButton($trigger, $id);
 
         // Dropdown panel
-        $html .= '<div id="' . $id . '" data-flyout-content role="menu" aria-orientation="vertical" class="hidden absolute left-0 z-50 mt-3 w-80 origin-top-left">';
+        $html .= '<div id="' . $id . '" data-flyout-content role="menu" aria-orientation="vertical" class="hidden absolute left-0 z-50 mt-3 w-80 origin-top-left transition-all duration-200" style="opacity: 0; transform: translateY(-8px) scale(0.95);">';
         $html .= '<div class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 overflow-hidden">';
         $html .= '<div class="p-4 space-y-1">';
 
@@ -213,7 +227,7 @@ class FlyoutMenu extends Component
         $html .= self::getTriggerButton($trigger, $id);
 
         // Mega menu panel
-        $html .= '<div id="' . $id . '" data-flyout-content role="menu" class="hidden absolute left-1/2 z-50 mt-3 w-screen max-w-4xl -translate-x-1/2 transform">';
+        $html .= '<div id="' . $id . '" data-flyout-content role="menu" class="hidden absolute left-1/2 z-50 mt-3 w-screen max-w-4xl -translate-x-1/2 transition-all duration-200" style="opacity: 0; transform: translateY(-8px) scale(0.95);">';
         $html .= '<div class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 overflow-hidden">';
 
         $html .= '<div class="grid grid-cols-1 lg:grid-cols-' . (count($sections) + ($featured ? 1 : 0)) . ' divide-x divide-gray-100">';
@@ -302,7 +316,7 @@ class FlyoutMenu extends Component
         // Grid panel
         $width = $cols === 2 ? 'w-64' : ($cols === 3 ? 'w-80' : 'w-96');
 
-        $html .= '<div id="' . $id . '" data-flyout-content role="menu" class="hidden absolute left-0 z-50 mt-3 ' . $width . ' origin-top-left">';
+        $html .= '<div id="' . $id . '" data-flyout-content role="menu" class="hidden absolute left-0 z-50 mt-3 ' . $width . ' origin-top-left transition-all duration-200" style="opacity: 0; transform: translateY(-8px) scale(0.95);">';
         $html .= '<div class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 p-4">';
         $html .= '<div class="grid grid-cols-' . $cols . ' gap-2">';
 
@@ -343,7 +357,7 @@ class FlyoutMenu extends Component
         $html .= self::getTriggerButton($trigger, $id);
 
         // Dropdown panel
-        $html .= '<div id="' . $id . '" data-flyout-content role="menu" class="hidden absolute left-0 z-50 mt-3 w-72 origin-top-left">';
+        $html .= '<div id="' . $id . '" data-flyout-content role="menu" class="hidden absolute left-0 z-50 mt-3 w-72 origin-top-left transition-all duration-200" style="opacity: 0; transform: translateY(-8px) scale(0.95);">';
         $html .= '<div class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5 overflow-hidden">';
 
         // Items

@@ -284,20 +284,20 @@ if (!window.dropdownInitialized) {
 
         // Trigger
         $html .= '<div>';
-        $html .= '<button type="button" data-dropdown-trigger class="inline-flex justify-center w-full rounded-xl border border-gray-200 shadow-sm px-4 py-2.5 bg-white text-sm font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200" aria-expanded="false" aria-haspopup="true" aria-controls="' . $id . '">';
+        $html .= '<button type="button" data-dropdown-trigger class="inline-flex justify-center w-full rounded-2xl border border-gray-200 shadow-sm px-4 py-2.5 bg-white text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all duration-300" aria-expanded="false" aria-haspopup="true" aria-controls="' . $id . '">';
         $html .= self::escape($trigger);
-        $html .= ' <svg class="ml-2 -mr-1 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>';
+        $html .= ' <svg class="ml-2 -mr-1 h-4 w-4 text-gray-400 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>';
         $html .= '</button>';
 
         // Menu items
-        $html .= '<div id="' . $id . '" class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-xl shadow-lg bg-white border border-gray-100 z-10" role="menu" aria-orientation="vertical">';
+        $html .= '<div id="' . $id . '" class="hidden origin-top-right absolute right-0 mt-3 w-56 rounded-2xl shadow-xl shadow-gray-200/50 bg-white ring-1 ring-black/5 z-10" role="menu" aria-orientation="vertical">';
         $html .= '<div class="py-2">';
 
         foreach ($items as $item) {
             if ($item === 'divider') {
                 $html .= '<div class="border-t border-gray-100 my-1" role="separator"></div>';
             } else {
-                $html .= '<a href="' . self::escape($item['url']) . '" role="menuitem" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">';
+                $html .= '<a href="' . self::escape($item['url']) . '" role="menuitem" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-all duration-200">';
 
                 if (isset($item['icon'])) {
                     $html .= '<i class="' . self::escape($item['icon']) . ' mr-2 text-gray-400" aria-hidden="true"></i>';
