@@ -18,23 +18,41 @@ class FlyoutMenu extends Component
     private static function getScript(): string
     {
         return '<script>
-if (!window.flyoutMenuInitialized) {
+(function() {
+    if (window.flyoutMenuInitialized) return;
     window.flyoutMenuInitialized = true;
 
-    // Fermer au clic en dehors
     document.addEventListener("click", function(e) {
-        // Ignorer si le clic est sur un bouton trigger
-        if (e.target.closest("[data-flyout-trigger]")) {
-            return;
-        }
+        var trigger = e.target.closest("[data-flyout-trigger]");
 
-        // Fermer tous les menus si clic en dehors
-        document.querySelectorAll("[data-flyout-content]").forEach(function(menu) {
-            menu.classList.add("hidden");
-        });
+        if (trigger) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var targetId = trigger.getAttribute("data-flyout-target");
+            var menu = document.getElementById(targetId);
+
+            if (menu) {
+                // Fermer tous les autres menus
+                document.querySelectorAll("[data-flyout-content]").forEach(function(m) {
+                    if (m.id !== targetId) {
+                        m.classList.add("hidden");
+                    }
+                });
+
+                // Toggle ce menu
+                menu.classList.toggle("hidden");
+            }
+        } else {
+            // Clic en dehors - fermer tous les menus
+            if (!e.target.closest("[data-flyout-content]")) {
+                document.querySelectorAll("[data-flyout-content]").forEach(function(menu) {
+                    menu.classList.add("hidden");
+                });
+            }
+        }
     });
 
-    // Fermer avec Escape
     document.addEventListener("keydown", function(e) {
         if (e.key === "Escape") {
             document.querySelectorAll("[data-flyout-content]").forEach(function(menu) {
@@ -42,22 +60,7 @@ if (!window.flyoutMenuInitialized) {
             });
         }
     });
-}
-
-function toggleFlyout(id) {
-    var menu = document.getElementById(id);
-    if (!menu) return;
-
-    // Fermer tous les autres menus
-    document.querySelectorAll("[data-flyout-content]").forEach(function(m) {
-        if (m.id !== id) {
-            m.classList.add("hidden");
-        }
-    });
-
-    // Toggle ce menu
-    menu.classList.toggle("hidden");
-}
+})();
 </script>';
     }
 
@@ -79,7 +82,7 @@ function toggleFlyout(id) {
         $html .= '<div class="' . $classes . '" data-flyout-menu ' . self::attributes($attributes) . '>';
 
         // Trigger button
-        $html .= '<button type="button" data-flyout-trigger class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="toggleFlyout(\'' . $id . '\')">';
+        $html .= '<button type="button" data-flyout-trigger data-flyout-target="' . $id . '" class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200">';
         $html .= self::escape($trigger);
         $html .= '<i class="fas fa-chevron-down ml-2 text-xs text-gray-400"></i>';
         $html .= '</button>';
@@ -127,7 +130,7 @@ function toggleFlyout(id) {
         $html .= '<div class="' . $classes . '" data-flyout-menu ' . self::attributes($attributes) . '>';
 
         // Trigger button
-        $html .= '<button type="button" data-flyout-trigger class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="toggleFlyout(\'' . $id . '\')">';
+        $html .= '<button type="button" data-flyout-trigger data-flyout-target="' . $id . '" class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200">';
         $html .= self::escape($trigger);
         $html .= '<i class="fas fa-chevron-down ml-2 text-xs text-gray-400"></i>';
         $html .= '</button>';
@@ -183,7 +186,7 @@ function toggleFlyout(id) {
         $html .= '<div class="' . $classes . '" data-flyout-menu ' . self::attributes($attributes) . '>';
 
         // Trigger button
-        $html .= '<button type="button" data-flyout-trigger class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="toggleFlyout(\'' . $id . '\')">';
+        $html .= '<button type="button" data-flyout-trigger data-flyout-target="' . $id . '" class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200">';
         $html .= self::escape($trigger);
         $html .= '<i class="fas fa-chevron-down ml-2 text-xs text-gray-400"></i>';
         $html .= '</button>';
@@ -271,7 +274,7 @@ function toggleFlyout(id) {
         $html .= '<div class="' . $classes . '" data-flyout-menu ' . self::attributes($attributes) . '>';
 
         // Trigger button
-        $html .= '<button type="button" data-flyout-trigger class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="toggleFlyout(\'' . $id . '\')">';
+        $html .= '<button type="button" data-flyout-trigger data-flyout-target="' . $id . '" class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200">';
         $html .= self::escape($trigger);
         $html .= '<i class="fas fa-chevron-down ml-2 text-xs text-gray-400"></i>';
         $html .= '</button>';
@@ -319,7 +322,7 @@ function toggleFlyout(id) {
         $html .= '<div class="' . $classes . '" data-flyout-menu ' . self::attributes($attributes) . '>';
 
         // Trigger button
-        $html .= '<button type="button" data-flyout-trigger class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200" onclick="toggleFlyout(\'' . $id . '\')">';
+        $html .= '<button type="button" data-flyout-trigger data-flyout-target="' . $id . '" class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors duration-200">';
         $html .= self::escape($trigger);
         $html .= '<i class="fas fa-chevron-down ml-2 text-xs text-gray-400"></i>';
         $html .= '</button>';
