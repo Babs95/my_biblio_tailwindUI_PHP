@@ -27,11 +27,15 @@ class Form extends Component
      */
     public static function input(string $name, string $label, array $attributes = [], ?string $error = null, ?string $help = null): string
     {
+        $errorId = $error ? $name . '-error' : null;
+        $helpId = $help ? $name . '-help' : null;
+        $describedBy = array_filter([$errorId, $helpId]);
+
         $html = self::renderLabel($name, $label, $attributes['required'] ?? false);
 
         $classes = self::classNames([
             self::INPUT_BASE,
-            $error ? 'border-red-500 focus:ring-red-500' : '',
+            $error ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : '',
             $attributes['class'] ?? '',
         ]);
 
@@ -42,15 +46,26 @@ class Form extends Component
             'class' => $classes,
         ], $attributes);
 
+        // Ajouter les attributs ARIA
+        if (!empty($describedBy)) {
+            $attrs['aria-describedby'] = implode(' ', $describedBy);
+        }
+        if ($error) {
+            $attrs['aria-invalid'] = 'true';
+        }
+        if ($attrs['required'] ?? false) {
+            $attrs['aria-required'] = 'true';
+        }
+
         unset($attrs['class']);
         $html .= sprintf('<input %s />', self::attributes($attrs));
 
         if ($error) {
-            $html .= self::renderError($error);
+            $html .= self::renderError($error, $errorId);
         }
 
         if ($help) {
-            $html .= self::renderHelp($help);
+            $html .= self::renderHelp($help, $helpId);
         }
 
         return '<div class="mb-4">' . $html . '</div>';
@@ -61,6 +76,10 @@ class Form extends Component
      */
     public static function textarea(string $name, string $label, array $attributes = [], ?string $error = null, ?string $help = null): string
     {
+        $errorId = $error ? $name . '-error' : null;
+        $helpId = $help ? $name . '-help' : null;
+        $describedBy = array_filter([$errorId, $helpId]);
+
         $html = self::renderLabel($name, $label, $attributes['required'] ?? false);
 
         $value = $attributes['value'] ?? '';
@@ -68,7 +87,7 @@ class Form extends Component
 
         $classes = self::classNames([
             self::INPUT_BASE,
-            $error ? 'border-red-500 focus:ring-red-500' : '',
+            $error ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : '',
             $attributes['class'] ?? '',
         ]);
 
@@ -79,6 +98,17 @@ class Form extends Component
             'class' => $classes,
         ], $attributes);
 
+        // Ajouter les attributs ARIA
+        if (!empty($describedBy)) {
+            $attrs['aria-describedby'] = implode(' ', $describedBy);
+        }
+        if ($error) {
+            $attrs['aria-invalid'] = 'true';
+        }
+        if ($attrs['required'] ?? false) {
+            $attrs['aria-required'] = 'true';
+        }
+
         unset($attrs['class']);
         $html .= sprintf(
             '<textarea %s>%s</textarea>',
@@ -87,11 +117,11 @@ class Form extends Component
         );
 
         if ($error) {
-            $html .= self::renderError($error);
+            $html .= self::renderError($error, $errorId);
         }
 
         if ($help) {
-            $html .= self::renderHelp($help);
+            $html .= self::renderHelp($help, $helpId);
         }
 
         return '<div class="mb-4">' . $html . '</div>';
@@ -102,12 +132,16 @@ class Form extends Component
      */
     public static function select(string $name, string $label, array $options, $selected = null, array $attributes = [], ?string $error = null, ?string $help = null): string
     {
+        $errorId = $error ? $name . '-error' : null;
+        $helpId = $help ? $name . '-help' : null;
+        $describedBy = array_filter([$errorId, $helpId]);
+
         $html = self::renderLabel($name, $label, $attributes['required'] ?? false);
 
         $classes = self::classNames([
             self::INPUT_BASE,
             'cursor-pointer',
-            $error ? 'border-red-500 focus:ring-red-500' : '',
+            $error ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : '',
             $attributes['class'] ?? '',
         ]);
 
@@ -116,6 +150,17 @@ class Form extends Component
             'name' => $name,
             'class' => $classes,
         ], $attributes);
+
+        // Ajouter les attributs ARIA
+        if (!empty($describedBy)) {
+            $attrs['aria-describedby'] = implode(' ', $describedBy);
+        }
+        if ($error) {
+            $attrs['aria-invalid'] = 'true';
+        }
+        if ($attrs['required'] ?? false) {
+            $attrs['aria-required'] = 'true';
+        }
 
         unset($attrs['class']);
         $html .= sprintf('<select %s>', self::attributes($attrs));
@@ -133,11 +178,11 @@ class Form extends Component
         $html .= '</select>';
 
         if ($error) {
-            $html .= self::renderError($error);
+            $html .= self::renderError($error, $errorId);
         }
 
         if ($help) {
-            $html .= self::renderHelp($help);
+            $html .= self::renderHelp($help, $helpId);
         }
 
         return '<div class="mb-4">' . $html . '</div>';
@@ -148,6 +193,8 @@ class Form extends Component
      */
     public static function checkbox(string $name, string $label, bool $checked = false, array $attributes = [], ?string $help = null): string
     {
+        $helpId = $help ? $name . '-help' : null;
+
         $attrs = array_merge([
             'type' => 'checkbox',
             'id' => $name,
@@ -155,6 +202,10 @@ class Form extends Component
             'class' => 'h-5 w-5 text-blue-600 focus:ring-blue-500/20 border-gray-300 rounded-md transition-colors',
             'checked' => $checked,
         ], $attributes);
+
+        if ($helpId) {
+            $attrs['aria-describedby'] = $helpId;
+        }
 
         $html = '<div class="mb-4 flex items-center">';
         $html .= sprintf('<input %s />', self::attributes($attrs));
@@ -164,7 +215,7 @@ class Form extends Component
         $html .= '</div>';
 
         if ($help) {
-            $html .= self::renderHelp($help);
+            $html .= self::renderHelp($help, $helpId);
         }
 
         return $html;
@@ -199,6 +250,10 @@ class Form extends Component
      */
     public static function file(string $name, string $label, array $attributes = [], ?string $error = null, ?string $help = null): string
     {
+        $errorId = $error ? $name . '-error' : null;
+        $helpId = $help ? $name . '-help' : null;
+        $describedBy = array_filter([$errorId, $helpId]);
+
         $html = self::renderLabel($name, $label, $attributes['required'] ?? false);
 
         $classes = self::classNames([
@@ -214,15 +269,26 @@ class Form extends Component
             'class' => $classes,
         ], $attributes);
 
+        // Ajouter les attributs ARIA
+        if (!empty($describedBy)) {
+            $attrs['aria-describedby'] = implode(' ', $describedBy);
+        }
+        if ($error) {
+            $attrs['aria-invalid'] = 'true';
+        }
+        if ($attrs['required'] ?? false) {
+            $attrs['aria-required'] = 'true';
+        }
+
         unset($attrs['class']);
         $html .= sprintf('<input %s />', self::attributes($attrs));
 
         if ($error) {
-            $html .= self::renderError($error);
+            $html .= self::renderError($error, $errorId);
         }
 
         if ($help) {
-            $html .= self::renderHelp($help);
+            $html .= self::renderHelp($help, $helpId);
         }
 
         return '<div class="mb-4">' . $html . '</div>';
@@ -253,11 +319,13 @@ class Form extends Component
      */
     public static function datetime(string $name, string $label, string $type = 'datetime-local', array $attributes = [], ?string $error = null): string
     {
+        $errorId = $error ? $name . '-error' : null;
+
         $html = self::renderLabel($name, $label, $attributes['required'] ?? false);
 
         $classes = self::classNames([
             self::INPUT_BASE,
-            $error ? 'border-red-500 focus:ring-red-500' : '',
+            $error ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : '',
             $attributes['class'] ?? '',
         ]);
 
@@ -268,11 +336,22 @@ class Form extends Component
             'class' => $classes,
         ], $attributes);
 
+        // Ajouter les attributs ARIA
+        if ($errorId) {
+            $attrs['aria-describedby'] = $errorId;
+        }
+        if ($error) {
+            $attrs['aria-invalid'] = 'true';
+        }
+        if ($attrs['required'] ?? false) {
+            $attrs['aria-required'] = 'true';
+        }
+
         unset($attrs['class']);
         $html .= sprintf('<input %s />', self::attributes($attrs));
 
         if ($error) {
-            $html .= self::renderError($error);
+            $html .= self::renderError($error, $errorId);
         }
 
         return '<div class="mb-4">' . $html . '</div>';
@@ -287,7 +366,7 @@ class Form extends Component
         $html .= self::escape($text);
 
         if ($required) {
-            $html .= ' <span class="text-red-500">*</span>';
+            $html .= ' <span class="text-red-500" aria-hidden="true">*</span>';
         }
 
         $html .= '</label>';
@@ -298,17 +377,24 @@ class Form extends Component
     /**
      * Rendu du message d'erreur
      */
-    private static function renderError(string $error): string
+    private static function renderError(string $error, ?string $id = null): string
     {
-        return '<p class="mt-2 text-sm text-red-600 flex items-center"><i class="fas fa-exclamation-circle mr-1.5"></i>' . self::escape($error) . '</p>';
+        $idAttr = $id ? ' id="' . self::escape($id) . '"' : '';
+        return '<p' . $idAttr . ' class="mt-2 text-sm text-red-600 flex items-center" role="alert">' .
+               '<svg class="h-4 w-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">' .
+               '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>' .
+               '</svg>' .
+               self::escape($error) .
+               '</p>';
     }
 
     /**
      * Rendu du texte d'aide
      */
-    private static function renderHelp(string $help): string
+    private static function renderHelp(string $help, ?string $id = null): string
     {
-        return '<p class="mt-2 text-sm text-gray-500">' . self::escape($help) . '</p>';
+        $idAttr = $id ? ' id="' . self::escape($id) . '"' : '';
+        return '<p' . $idAttr . ' class="mt-2 text-sm text-gray-500">' . self::escape($help) . '</p>';
     }
 
     /**
@@ -316,7 +402,10 @@ class Form extends Component
      */
     public static function grid(array $fields, int $cols = 2): string
     {
-        $gridClass = $cols === 2 ? 'grid-cols-2' : 'grid-cols-' . $cols;
+        // Validation du paramètre cols (2-4)
+        $cols = max(1, min(4, $cols));
+
+        $gridClass = 'grid-cols-' . $cols;
         $html = '<div class="grid ' . $gridClass . ' gap-6">';
 
         foreach ($fields as $field) {

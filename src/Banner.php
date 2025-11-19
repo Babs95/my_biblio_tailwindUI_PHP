@@ -12,6 +12,54 @@ namespace TailwindUI;
  */
 class Banner extends Component
 {
+    private static bool $scriptIncluded = false;
+
+    /**
+     * Script pour la gestion des bannières avec event delegation
+     */
+    private static function getScript(): string
+    {
+        if (self::$scriptIncluded) {
+            return '';
+        }
+
+        self::$scriptIncluded = true;
+
+        return '<script>
+(function() {
+    if (window.bannerInitialized) return;
+    window.bannerInitialized = true;
+
+    document.addEventListener("click", function(e) {
+        var dismissBtn = e.target.closest("[data-banner-dismiss]");
+        if (dismissBtn) {
+            var targetId = dismissBtn.getAttribute("data-banner-dismiss");
+            var banner = document.getElementById(targetId);
+            if (banner) {
+                banner.style.opacity = "0";
+                banner.style.transform = "translateY(-100%)";
+                setTimeout(function() { banner.remove(); }, 300);
+            }
+        }
+    });
+})();
+</script>';
+    }
+
+    /**
+     * Génère le bouton de fermeture SVG
+     */
+    private static function getDismissButton(string $id, string $hoverClass = 'hover:bg-white/10'): string
+    {
+        return '<button type="button" aria-label="Fermer la bannière" ' .
+               'data-banner-dismiss="' . $id . '" ' .
+               'class="flex-shrink-0 p-1 rounded-lg ' . $hoverClass . ' focus:outline-none focus:ring-2 focus:ring-white transition-colors">' .
+               '<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">' .
+               '<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>' .
+               '</svg>' .
+               '</button>';
+    }
+
     /**
      * Barre d'annonce simple
      * @param int|null $autoDismiss Temps en ms avant fermeture automatique (null = désactivé)
@@ -27,11 +75,12 @@ class Banner extends Component
 
         $id = 'banner-' . uniqid();
 
-        $html = '<div id="' . $id . '" class="' . $classes . '" role="banner" ' . self::attributes($attributes) . '>';
+        $html = self::getScript();
+        $html .= '<div id="' . $id . '" class="' . $classes . '" role="banner" ' . self::attributes($attributes) . '>';
 
         // Auto-dismiss script
         if ($autoDismiss) {
-            $html .= '<script>setTimeout(function() { var el = document.getElementById("' . $id . '"); if (el) { el.style.opacity = "0"; el.style.transform = "translateY(-100%)"; setTimeout(function() { el.remove(); }, 300); } }, ' . $autoDismiss . ');</script>';
+            $html .= '<script>setTimeout(function() { var el = document.getElementById("' . $id . '"); if (el) { el.style.opacity = "0"; el.style.transform = "translateY(-100%)"; setTimeout(function() { el.remove(); }, 300); } }, ' . intval($autoDismiss) . ');</script>';
         }
         $html .= '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">';
         $html .= '<div class="flex items-center justify-between flex-wrap gap-2">';
@@ -52,11 +101,7 @@ class Banner extends Component
         $html .= '</div>';
 
         if ($dismissible) {
-            $html .= '<button type="button" aria-label="Fermer" class="flex-shrink-0 p-1 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-white transition-colors" onclick="document.getElementById(\'' . $id . '\').remove()">';
-            $html .= '<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">';
-            $html .= '<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>';
-            $html .= '</svg>';
-            $html .= '</button>';
+            $html .= self::getDismissButton($id, 'hover:bg-blue-500');
         }
 
         $html .= '</div>';
@@ -81,10 +126,11 @@ class Banner extends Component
 
         $id = 'promo-' . uniqid();
 
-        $html = '<div id="' . $id . '" class="' . $classes . '" role="banner" ' . self::attributes($attributes) . '>';
+        $html = self::getScript();
+        $html .= '<div id="' . $id . '" class="' . $classes . '" role="banner" ' . self::attributes($attributes) . '>';
 
         if ($autoDismiss) {
-            $html .= '<script>setTimeout(function() { var el = document.getElementById("' . $id . '"); if (el) { el.style.opacity = "0"; el.style.transform = "translateY(-100%)"; setTimeout(function() { el.remove(); }, 300); } }, ' . $autoDismiss . ');</script>';
+            $html .= '<script>setTimeout(function() { var el = document.getElementById("' . $id . '"); if (el) { el.style.opacity = "0"; el.style.transform = "translateY(-100%)"; setTimeout(function() { el.remove(); }, 300); } }, ' . intval($autoDismiss) . ');</script>';
         }
         $html .= '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">';
         $html .= '<div class="flex items-center justify-between flex-wrap gap-4">';
@@ -106,11 +152,7 @@ class Banner extends Component
 
         // Dismiss button
         if ($dismissible) {
-            $html .= '<button type="button" aria-label="Fermer" class="flex-shrink-0 p-1 rounded-lg hover:bg-white/10 focus:outline-none transition-colors" onclick="document.getElementById(\'' . $id . '\').remove()">';
-            $html .= '<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">';
-            $html .= '<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>';
-            $html .= '</svg>';
-            $html .= '</button>';
+            $html .= self::getDismissButton($id);
         }
 
         $html .= '</div>';
@@ -134,24 +176,25 @@ class Banner extends Component
 
         $id = 'cookie-' . uniqid();
 
-        $html = '<div id="' . $id . '" class="' . $classes . '" ' . self::attributes($attributes) . '>';
+        $html = self::getScript();
+        $html .= '<div id="' . $id . '" class="' . $classes . '" role="dialog" aria-labelledby="' . $id . '-title" ' . self::attributes($attributes) . '>';
         $html .= '<div class="bg-gray-900 text-white">';
         $html .= '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">';
         $html .= '<div class="md:flex md:items-center md:justify-between">';
 
         // Message
         $html .= '<div class="flex-1 mb-4 md:mb-0 md:mr-8">';
-        $html .= '<p class="text-sm text-gray-300">';
+        $html .= '<p id="' . $id . '-title" class="text-sm text-gray-300">';
         $html .= self::escape($message);
         $html .= '</p>';
         $html .= '</div>';
 
         // Buttons
         $html .= '<div class="flex space-x-4">';
-        $html .= '<button type="button" onclick="document.getElementById(\'' . $id . '\').remove(); localStorage.setItem(\'cookies\', \'accepted\')" class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors">';
+        $html .= '<button type="button" data-banner-dismiss="' . $id . '" onclick="localStorage.setItem(\'cookies\', \'accepted\')" class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors">';
         $html .= self::escape($acceptText);
         $html .= '</button>';
-        $html .= '<button type="button" onclick="document.getElementById(\'' . $id . '\').remove(); localStorage.setItem(\'cookies\', \'declined\')" class="px-4 py-2 bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-600 transition-colors">';
+        $html .= '<button type="button" data-banner-dismiss="' . $id . '" onclick="localStorage.setItem(\'cookies\', \'declined\')" class="px-4 py-2 bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-600 transition-colors">';
         $html .= self::escape($declineText);
         $html .= '</button>';
         $html .= '</div>';
@@ -178,7 +221,7 @@ class Banner extends Component
 
         $id = 'countdown-' . uniqid();
 
-        $html = '<div id="' . $id . '" class="' . $classes . '" ' . self::attributes($attributes) . '>';
+        $html = '<div id="' . $id . '" class="' . $classes . '" role="timer" ' . self::attributes($attributes) . '>';
         $html .= '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">';
         $html .= '<div class="flex items-center justify-center flex-wrap gap-4">';
 
@@ -186,13 +229,13 @@ class Banner extends Component
         $html .= '<span class="text-sm font-bold">' . self::escape($message) . '</span>';
 
         // Countdown
-        $html .= '<div class="flex items-center space-x-2 font-mono">';
+        $html .= '<div class="flex items-center space-x-2 font-mono" aria-live="polite">';
         $html .= '<div class="bg-white/20 rounded-lg px-2 py-1"><span id="' . $id . '-days">00</span><span class="text-xs ml-1">j</span></div>';
-        $html .= '<span>:</span>';
+        $html .= '<span aria-hidden="true">:</span>';
         $html .= '<div class="bg-white/20 rounded-lg px-2 py-1"><span id="' . $id . '-hours">00</span><span class="text-xs ml-1">h</span></div>';
-        $html .= '<span>:</span>';
+        $html .= '<span aria-hidden="true">:</span>';
         $html .= '<div class="bg-white/20 rounded-lg px-2 py-1"><span id="' . $id . '-mins">00</span><span class="text-xs ml-1">m</span></div>';
-        $html .= '<span>:</span>';
+        $html .= '<span aria-hidden="true">:</span>';
         $html .= '<div class="bg-white/20 rounded-lg px-2 py-1"><span id="' . $id . '-secs">00</span><span class="text-xs ml-1">s</span></div>';
         $html .= '</div>';
 
@@ -244,15 +287,24 @@ class Banner extends Component
         ];
 
         $icons = [
-            'info' => 'fas fa-info-circle text-blue-500',
-            'success' => 'fas fa-check-circle text-emerald-500',
-            'warning' => 'fas fa-exclamation-triangle text-amber-500',
-            'danger' => 'fas fa-exclamation-circle text-red-500',
-            'error' => 'fas fa-exclamation-circle text-red-500',
+            'info' => 'M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z',
+            'success' => 'M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z',
+            'warning' => 'M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z',
+            'danger' => 'M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z',
+            'error' => 'M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z',
+        ];
+
+        $iconColors = [
+            'info' => 'text-blue-500',
+            'success' => 'text-emerald-500',
+            'warning' => 'text-amber-500',
+            'danger' => 'text-red-500',
+            'error' => 'text-red-500',
         ];
 
         $colorClass = $colors[$type] ?? $colors['info'];
-        $iconClass = $icons[$type] ?? $icons['info'];
+        $iconPath = $icons[$type] ?? $icons['info'];
+        $iconColor = $iconColors[$type] ?? $iconColors['info'];
 
         $classes = self::classNames([
             $colorClass . ' border-b',
@@ -263,13 +315,16 @@ class Banner extends Component
 
         $id = 'alert-banner-' . uniqid();
 
-        $html = '<div id="' . $id . '" class="' . $classes . '" ' . self::attributes($attributes) . '>';
+        $html = self::getScript();
+        $html .= '<div id="' . $id . '" class="' . $classes . '" role="alert" ' . self::attributes($attributes) . '>';
         $html .= '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">';
         $html .= '<div class="flex items-center justify-between">';
 
         // Icon and message
         $html .= '<div class="flex items-center">';
-        $html .= '<i class="' . $iconClass . ' mr-3"></i>';
+        $html .= '<svg class="h-5 w-5 ' . $iconColor . ' mr-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">';
+        $html .= '<path fill-rule="evenodd" d="' . $iconPath . '" clip-rule="evenodd"/>';
+        $html .= '</svg>';
         $html .= '<p class="text-sm font-medium">';
 
         if ($url) {
@@ -285,8 +340,8 @@ class Banner extends Component
 
         // Dismiss button
         if ($dismissible) {
-            $html .= '<button type="button" class="flex-shrink-0 ml-4 p-1 rounded-lg hover:bg-black/5 focus:outline-none transition-colors" onclick="document.getElementById(\'' . $id . '\').remove()">';
-            $html .= '<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">';
+            $html .= '<button type="button" aria-label="Fermer l\'alerte" data-banner-dismiss="' . $id . '" class="flex-shrink-0 ml-4 p-1 rounded-lg hover:bg-black/5 focus:outline-none transition-colors">';
+            $html .= '<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">';
             $html .= '<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>';
             $html .= '</svg>';
             $html .= '</button>';
@@ -313,7 +368,8 @@ class Banner extends Component
 
         $id = 'floating-' . uniqid();
 
-        $html = '<div id="' . $id . '" class="' . $classes . '" ' . self::attributes($attributes) . '>';
+        $html = self::getScript();
+        $html .= '<div id="' . $id . '" class="' . $classes . '" role="complementary" ' . self::attributes($attributes) . '>';
         $html .= '<div class="bg-gray-900 text-white rounded-2xl shadow-2xl p-4">';
         $html .= '<div class="flex items-center justify-between gap-4">';
 
@@ -327,8 +383,8 @@ class Banner extends Component
         $html .= '</a>';
 
         if ($dismissible) {
-            $html .= '<button type="button" class="flex-shrink-0 p-2 rounded-lg hover:bg-gray-800 focus:outline-none transition-colors" onclick="document.getElementById(\'' . $id . '\').remove()">';
-            $html .= '<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">';
+            $html .= '<button type="button" aria-label="Fermer" data-banner-dismiss="' . $id . '" class="flex-shrink-0 p-2 rounded-lg hover:bg-gray-800 focus:outline-none transition-colors">';
+            $html .= '<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">';
             $html .= '<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>';
             $html .= '</svg>';
             $html .= '</button>';
@@ -368,23 +424,20 @@ class Banner extends Component
 
         $id = 'icon-banner-' . uniqid();
 
-        $html = '<div id="' . $id . '" class="' . $classes . '" ' . self::attributes($attributes) . '>';
+        $html = self::getScript();
+        $html .= '<div id="' . $id . '" class="' . $classes . '" role="banner" ' . self::attributes($attributes) . '>';
         $html .= '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">';
         $html .= '<div class="flex items-center justify-between">';
 
         // Icon and message
         $html .= '<div class="flex items-center">';
-        $html .= '<i class="' . self::escape($icon) . ' mr-3 text-lg"></i>';
+        $html .= '<i class="' . self::escape($icon) . ' mr-3 text-lg" aria-hidden="true"></i>';
         $html .= '<p class="text-sm font-medium">' . self::escape($message) . '</p>';
         $html .= '</div>';
 
         // Dismiss button
         if ($dismissible) {
-            $html .= '<button type="button" class="flex-shrink-0 p-1 rounded-lg hover:bg-white/10 focus:outline-none transition-colors" onclick="document.getElementById(\'' . $id . '\').remove()">';
-            $html .= '<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">';
-            $html .= '<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>';
-            $html .= '</svg>';
-            $html .= '</button>';
+            $html .= self::getDismissButton($id);
         }
 
         $html .= '</div>';
@@ -392,5 +445,13 @@ class Banner extends Component
         $html .= '</div>';
 
         return $html;
+    }
+
+    /**
+     * Réinitialise le flag d'inclusion du script (utile pour les tests)
+     */
+    public static function resetScriptFlag(): void
+    {
+        self::$scriptIncluded = false;
     }
 }
