@@ -193,6 +193,25 @@ class Button extends Component
             'soft-green' => 'text-emerald-700 bg-emerald-50 hover:bg-emerald-100 focus:ring-emerald-500 border border-emerald-100',
             'soft-purple' => 'text-purple-700 bg-purple-50 hover:bg-purple-100 focus:ring-purple-500 border border-purple-100',
             'soft-amber' => 'text-amber-700 bg-amber-50 hover:bg-amber-100 focus:ring-amber-500 border border-amber-100',
+
+            // Gradient animé
+            'gradient-animated' => 'text-white bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-size-200 bg-pos-0 hover:bg-pos-100 transition-all duration-500 focus:ring-purple-500 shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-pink-500/50 animate-gradient',
+
+            // Néon
+            'neon-cyan' => 'text-cyan-400 bg-gray-900 border-2 border-cyan-400 hover:bg-cyan-400 hover:text-gray-900 focus:ring-cyan-500 shadow-lg shadow-cyan-400/50 hover:shadow-cyan-400/75',
+            'neon-pink' => 'text-pink-400 bg-gray-900 border-2 border-pink-400 hover:bg-pink-400 hover:text-gray-900 focus:ring-pink-500 shadow-lg shadow-pink-400/50 hover:shadow-pink-400/75',
+            'neon-green' => 'text-emerald-400 bg-gray-900 border-2 border-emerald-400 hover:bg-emerald-400 hover:text-gray-900 focus:ring-emerald-500 shadow-lg shadow-emerald-400/50 hover:shadow-emerald-400/75',
+
+            // 3D
+            '3d-blue' => 'text-white bg-gradient-to-b from-blue-400 to-blue-600 border-b-4 border-blue-800 hover:border-blue-900 active:border-b-0 active:mt-1 focus:ring-blue-500 shadow-lg',
+            '3d-red' => 'text-white bg-gradient-to-b from-red-400 to-red-600 border-b-4 border-red-800 hover:border-red-900 active:border-b-0 active:mt-1 focus:ring-red-500 shadow-lg',
+            '3d-green' => 'text-white bg-gradient-to-b from-emerald-400 to-emerald-600 border-b-4 border-emerald-800 hover:border-emerald-900 active:border-b-0 active:mt-1 focus:ring-emerald-500 shadow-lg',
+
+            // Dark mode
+            'dark' => 'text-gray-100 bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-600 focus:ring-gray-500 shadow-lg',
+
+            // Ghost
+            'ghost' => 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:ring-gray-400',
         ];
 
         return $variants[$variant] ?? $variants['primary'];
@@ -230,5 +249,69 @@ class Button extends Component
             self::attributes($attributes),
             self::escape($text)
         );
+    }
+
+    /**
+     * Bouton avec gradient animé
+     */
+    public static function gradientAnimated(string $text, array $attributes = [], string $size = 'md'): string
+    {
+        return self::render($text, 'gradient-animated', $size, $attributes);
+    }
+
+    /**
+     * Bouton avec effet néon
+     */
+    public static function neon(string $text, string $color = 'cyan', array $attributes = [], string $size = 'md'): string
+    {
+        return self::render($text, "neon-{$color}", $size, $attributes);
+    }
+
+    /**
+     * Bouton avec effet 3D
+     */
+    public static function threed(string $text, string $color = 'blue', array $attributes = [], string $size = 'md'): string
+    {
+        return self::render($text, "3d-{$color}", $size, $attributes);
+    }
+
+    /**
+     * Bouton avec état de chargement
+     */
+    public static function loading(string $text, bool $isLoading = true, string $variant = 'primary', array $attributes = [], string $size = 'md'): string
+    {
+        if ($isLoading) {
+            $attributes['disabled'] = true;
+            $spinnerHtml = '<svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+            $content = $spinnerHtml . '<span class="ml-2">' . self::escape($text) . '</span>';
+        } else {
+            $content = self::escape($text);
+        }
+        return self::render($content, $variant, $size, $attributes);
+    }
+
+    /**
+     * Bouton avec icône et badge de notification
+     */
+    public static function withBadge(string $text, string $icon, string $badge, string $variant = 'primary', array $attributes = [], string $size = 'md'): string
+    {
+        $iconHtml = sprintf('<i class="%s relative" aria-hidden="true"><span class="absolute -top-1 -right-1 flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-red-500 text-white text-xs items-center justify-center font-bold">%s</span></span></i>', self::escape($icon), self::escape($badge));
+        return self::render($iconHtml . '<span>' . self::escape($text) . '</span>', $variant, $size, $attributes);
+    }
+
+    /**
+     * Bouton dark mode
+     */
+    public static function dark(string $text, array $attributes = [], string $size = 'md'): string
+    {
+        return self::render($text, 'dark', $size, $attributes);
+    }
+
+    /**
+     * Bouton ghost (transparent avec hover)
+     */
+    public static function ghost(string $text, array $attributes = [], string $size = 'md'): string
+    {
+        return self::render($text, 'ghost', $size, $attributes);
     }
 }

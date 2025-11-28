@@ -22,10 +22,12 @@
 
 ## ✨ Fonctionnalités
 
-- **7 composants** prêts à l'emploi : Button, Card, Form, Alert, Badge, Table, Navigation
-- **100+ méthodes** pour tous vos besoins UI
+- **13+ composants** prêts à l'emploi : Button, Card, Form, Alert, Badge, Table, Navigation, Modal, Tooltip, Progress, Skeleton, et plus
+- **150+ méthodes** pour tous vos besoins UI
+- **Effets modernes** : Gradients, glassmorphism, animations fluides, néon
 - **60% moins de code** par rapport au HTML manuel
 - **Sécurisé** : Échappement HTML automatique (protection XSS)
+- **Accessible** : Support ARIA et navigation au clavier
 - **Personnalisable** : Ajoutez vos propres classes CSS
 - **Compatible Laravel** : Fonctionne avec Blade out-of-the-box
 
@@ -70,16 +72,30 @@ composer require tailwindui/php
 ```php
 use TailwindUI\Button;
 
-// Variantes
+// Variantes de base
 echo Button::primary('Enregistrer');
 echo Button::secondary('Annuler');
 echo Button::success('Valider');
 echo Button::danger('Supprimer');
 
+// Nouveaux effets modernes
+echo Button::gradientAnimated('Gradient Animé');
+echo Button::neon('Néon', 'cyan');
+echo Button::threed('3D Effect', 'blue');
+echo Button::dark('Dark Mode');
+echo Button::ghost('Ghost');
+echo Button::glass('Glassmorphism');
+
+// État de chargement
+echo Button::loading('Chargement...', true, 'primary');
+
+// Avec badge de notification
+echo Button::withBadge('Messages', 'fas fa-envelope', '5', 'primary');
+
 // Avec icône
 echo Button::withIcon('Enregistrer', 'fas fa-save', 'primary');
 
-// Tailles : 'sm', 'md', 'lg', 'xl'
+// Tailles : 'xs', 'sm', 'md', 'lg', 'xl'
 echo Button::primary('Petit', [], 'sm');
 ```
 
@@ -191,6 +207,89 @@ echo Navigation::tabs([
     'all' => ['label' => 'Tous', 'url' => '/tasks', 'count' => 42],
     'active' => ['label' => 'Actifs', 'url' => '/tasks?status=active']
 ], 'all');
+```
+
+### Modal
+
+```php
+use TailwindUI\Modal;
+
+// Modal basique
+echo Modal::basic('mon-modal', 'Titre', 'Contenu de la modal', $footer);
+
+// Bouton pour ouvrir la modal
+echo Modal::trigger('mon-modal', 'Ouvrir la modal', 'primary');
+
+// Modal de confirmation
+echo Modal::confirm('confirm', 'Supprimer', 'Êtes-vous sûr ?');
+
+// Modal glassmorphism
+echo Modal::glass('glass-modal', 'Effet Verre', 'Contenu élégant');
+
+// Drawer depuis la droite
+echo Modal::drawer('drawer', 'Menu', 'Contenu du drawer', 'right');
+```
+
+### Tooltip
+
+```php
+use TailwindUI\Tooltip;
+
+// Tooltip en haut
+echo Tooltip::top('Survolez-moi', 'Texte de l\'info-bulle');
+
+// Différentes positions
+echo Tooltip::bottom('Texte', 'Info-bulle en bas');
+echo Tooltip::left('Texte', 'Info-bulle à gauche');
+echo Tooltip::right('Texte', 'Info-bulle à droite');
+
+// Tooltip avec icône
+echo Tooltip::icon('fas fa-info-circle', 'Information complémentaire');
+
+// Thèmes : dark, light, primary, success, danger
+echo Tooltip::top('Texte', 'Info-bulle claire', 'light');
+```
+
+### Progress
+
+```php
+use TailwindUI\Progress;
+
+// Barre de progression
+echo Progress::bar(75, 'blue', 'Téléchargement');
+
+// Progress circulaire
+echo Progress::circle(60, 'green', 'Complet');
+
+// Spinner de chargement
+echo Progress::spinner('blue', [], 'md');
+
+// Dots animés
+echo Progress::dots('purple');
+
+// Progression par étapes
+echo Progress::steps(['Étape 1', 'Étape 2', 'Étape 3'], 2);
+```
+
+### Skeleton
+
+```php
+use TailwindUI\Skeleton;
+
+// Texte skeleton
+echo Skeleton::text(3); // 3 lignes
+
+// Carte skeleton
+echo Skeleton::card(true, 3); // avec image, 3 lignes
+
+// Liste skeleton
+echo Skeleton::list(5, true); // 5 items avec avatars
+
+// Table skeleton
+echo Skeleton::table(5, 4); // 5 lignes, 4 colonnes
+
+// Grid de cards
+echo Skeleton::grid(6, 3); // 6 items, 3 colonnes
 ```
 
 ---
